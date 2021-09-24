@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "299633375086",
+    "project_id": "neuroverse-info",
+    "storage_bucket": "neuroverse-info.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299633375086:android:fd120c5f54173d902eb37f",
+        "android_client_info": {
+          "package_name": "info.neuroverseDev.neuroverse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299633375086-1fvq47luk5or1vphq6bttqik33celp0d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "info.neuroverseDev.neuroverse",
+            "certificate_hash": "fff7e0018184510e0aea52bffbe7e93b18271540"
+          }
+        },
+        {
+          "client_id": "299633375086-skhs9fivr1pgm8e5e9vrmu5ctqdngr47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb2997297UwHfuKzICG29uaYxw3CAgncs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299633375086-skhs9fivr1pgm8e5e9vrmu5ctqdngr47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
