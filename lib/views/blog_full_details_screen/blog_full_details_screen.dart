@@ -30,6 +30,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       height: 10,
@@ -330,7 +331,93 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                             },
                           )
                         : Container(),
-                  ],
+
+                    Text("Reviews"),
+                    SizedBox(height: 30,),
+                TextField (
+                  controller: controller.reviewController,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Enter Name',
+                      hintText: 'Enter Your Name'
+                  ),
+                  onSubmitted: (value){
+
+                    controller.addReview(object.id);
+
+                  }
+                  ,
+                ),
+                    StreamBuilder(
+                        stream: FirebaseDatabase.instance
+                            .reference()
+                            .child("Reviews")
+                            .child(object.id).onValue,
+                        builder: (context,AsyncSnapshot<Event> snap) {
+                          if (snap.hasData) {
+
+                            final  data=snap.data!.snapshot.value;
+
+                              print("the map data is ${data}");
+                            List? dataKeys=[];
+                              if(data==null)
+                                {
+
+                                }else
+                                  {
+                                    dataKeys=data.keys.toList() ;
+                                  }
+
+                         //   print("keys length is  ${dataKeys.length}");
+                         //  return Text("");
+                            return  data==null ? Text("No reviews") : ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                                itemBuilder: (_,index){
+                                  
+                                  Map reviewData=data[dataKeys![index]];
+                              return Container(
+                                child:Row(
+                                   mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                  Container(
+
+                                      child: Image.network(reviewData["imageUrl"],),
+                                   width: 100,
+                                    height: 100,
+
+                                  ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(reviewData["userName"]),
+                                        Text(reviewData["text"])
+                                      ],
+                                    ),
+                                    SizedBox(width: 20,),
+                                  controller.box.get("token")==reviewData["userId"]? IconButton(onPressed: (){
+
+                                      controller.deleteReView(object.id,reviewData["docId"]);
+
+                                    }, icon: Icon(Icons.delete)):Container(),
+
+                                  ],
+                                )
+                              );
+                            }, 
+                             /*   separatorBuilder (_,index){
+                             
+                             
+                              return Divider(color: Colors.red,);
+                                },*/
+                              itemCount: dataKeys?.length,
+                            );
+                          }
+                          return Text("");
+                        }),
+
+
+                ],
                 ),
               ),
             ),

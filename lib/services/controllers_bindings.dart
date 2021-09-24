@@ -14,7 +14,8 @@ initControllers(){
       Get.lazyPut<SettingsScreenController>(() => SettingsScreenController());
       Get.lazyPut<SingleBlogController>(() => SingleBlogController());
       Get.lazyPut<LocalStorage>(() => LocalStorage());
-      Get.lazyPut<GoogleService>(() => GoogleService());
+  Get.lazyPut<GoogleService>(() => GoogleService());
+
       Get.lazyPut<FirebaseService>(() => FirebaseService());
 
 
