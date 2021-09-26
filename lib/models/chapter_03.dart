@@ -221,3 +221,61 @@ String t4_content_01="• Get active within the organizations that support effor
 
 String para1="Support your friend always through the things that they are struggling with -- Your support will help your friend grow by challenging themselves more knowing that there is someone supporting them!";
 String para2="Closing this gap would create a more unified world which would ultimately result in the world being more accepting and overall a better place. When we honor the unique value of every person and the unique structure of every mind, we maximize our potential as a society, in terms of intellectual advancements , artistic progress, and athletic achievement alike. If every person recognized and learned how to navigate neurodiversity, this better world can emerge into fruition. By starting to learn more and make little changes while younger, the principle will solidify within us as a natural part of the respect we give to ourselves and others, both neurodiverse individuals and neurotypical individuals.";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Quiz questions
+
+
+String q1="Typically at what age does autism emerge in children?";
+String q2="True or False. Is ADHD a genetic trait? (does is run in families)";
+String q3="Which of the following is a motor tic?";
+String q4="What is the school drop out rate for individuals with dyslexia?";
+String q5="True or False. 12% of people with dyslexia enrolled in college complete all 4 years of undergrad.";
+String q6="Bipolar disorder affects the mood of individuals and causes extreme changes in mood and behavior. These two extremes are called ____ ________ ____ episodes and ____ ____ ____ ____ episodes.";
+String q7="Are boys 3 times more likely to possess autism spectrum disorder (ASD) than girls?";
+String q8="The two types of tics are ____ ____ ____ ____ tics and____ ____ ____ ____ tics";
+
+
+Map<String,dynamic> ans={
+
+  "q1":"3 years old",
+  "q2":"True",
+  "q3":"Head jerking",
+  "q4":"35%",
+  "q5":"False",
+  "q6":"Manic,Depressive",
+  "q7":"True",
+  "q8":"Motal,Vocal",
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
