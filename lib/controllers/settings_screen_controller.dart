@@ -11,20 +11,40 @@ class SettingsScreenController extends GetxController
 
  late GoogleService googleInstance;
 
+   bool isLoading =false;
+
+   bool isLogin=false;
+
   @override
   Future<void> onInit() async {
+
+    isLoading=true;
     googleInstance = Get.find<GoogleService>();
     box= Hive.box(Keywords.app_Name);
-    DataSnapshot blodData =await FirebaseDatabase.instance
-        .reference()
-        .child("UserInformation")
-        .child(box.get("token"))
+    isLogin= await checkUserIsLoginOrNot();
 
-        .once();
+    if(isLogin)
+      {
+        DataSnapshot blodData =await FirebaseDatabase.instance
+            .reference()
+            .child("UserInformation")
+            .child(box.get("token"))
 
-    userData=blodData!.value;
+            .once();
 
+        userData=blodData!.value;
+
+      }
+
+
+    isLoading=false;
      update();
+  }
+
+  checkUserIsLoginOrNot()
+  async{
+    String tocken=await box.get("token") ?? "";
+    return tocken=="" || tocken==null ?false : true;
   }
 
 
@@ -44,6 +64,7 @@ class SettingsScreenController extends GetxController
 
 
    }
+
 
 
 

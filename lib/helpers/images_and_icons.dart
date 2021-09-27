@@ -15,6 +15,21 @@ class ImagesAndIcons
 
   static final String share="assets/icons/share.png";
 
+  static final String profile_edit="assets/icons/profile_edit.png";
+
+  static final String logout="assets/icons/logout.png";
+
+  static final String visit="assets/icons/visit.png";
+
+  static final String about_us="assets/icons/about_us.png";
+
+  static final String privacy_policy="assets/icons/privacy_policy.png";
+
+  static final String fb="assets/icons/fb.png";
+
+  static final String google="assets/icons/google.png";
+
+  static final String twitter="assets/icons/twitter.png";
 
   // images
 
@@ -46,5 +61,7 @@ class ImagesAndIcons
   static  String app_logo="assets/images/app_logo.jpeg";
 
   static  String quiz_image="assets/images/quiz_image.png";
+
+  static  String no_user="assets/images/no_user.png";
 
 }
