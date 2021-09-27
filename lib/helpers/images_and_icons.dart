@@ -18,8 +18,11 @@ class ImagesAndIcons
 
   // images
 
-  static  String chapter_03_01="assets/images/03_1.png";
+  static  String chapter_03_01="assets/images/03_1.jpeg";
+
+
   static  String chapter_04_01="assets/images/04_1.png";
+
   static  String chapter_05_01="assets/images/05_1.png";
   static  String chapter_05_02="assets/images/05_2.png";
 
@@ -39,5 +42,7 @@ class ImagesAndIcons
   static  String chapter_010_01="assets/images/010_1.png";
 
   static  String support="assets/images/support.jpeg";
+
+  static  String app_logo="assets/images/app_logo.jpeg";
 
 }

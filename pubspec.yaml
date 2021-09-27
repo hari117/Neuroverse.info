@@ -46,6 +46,7 @@ dev_dependencies:
   path_provider :
   intl :
   url_launcher :
+  font_awesome_flutter :
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

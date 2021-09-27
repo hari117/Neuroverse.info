@@ -14,6 +14,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                 body: PageView(
                   controller: controller.pageController,
                   allowImplicitScrolling:false ,
+                    physics:new NeverScrollableScrollPhysics(),
                   children: [
                     BlogsScreen(),
                     QuizScreen(),
@@ -55,7 +56,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                         width: 8,
                                       ),
                                       Text("Home",
-                                          style: GoogleFonts.ibmPlexSans(
+                                          style: GoogleFonts.poppins(
                                               textStyle: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500,
@@ -105,7 +106,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                         width: 5,
                                       ),
                                       Text(
-                                        "Quiz",    style: GoogleFonts.ibmPlexSans(
+                                        "Quiz",    style: GoogleFonts.poppins(
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
@@ -158,7 +159,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                         width: 5,
                                       ),
                                       Text(
-                                        "Profile", style: GoogleFonts.ibmPlexSans(
+                                        "Profile", style: GoogleFonts.poppins(
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
