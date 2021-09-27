@@ -48,15 +48,7 @@ class QuizScreen extends GetView<QuizScreenController> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "1.$q1",
-                                  style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 1.2)),
-                                ),
+                                questionTitle("1.$q1"),
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -115,12 +107,19 @@ class QuizScreen extends GetView<QuizScreenController> {
                             height: 20,
                           ),
                           Container(
+                            padding: EdgeInsets.only(
+                                top: 10, bottom: 10, left: 5, right: 5),
+                            decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(q2),
+                                questionTitle("2.$q2"),
                                 SizedBox(
-                                  height: 5,
+                                  height: 15,
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -129,29 +128,22 @@ class QuizScreen extends GetView<QuizScreenController> {
                                         : controller.updateQ2Quiz(1, "True");
                                   },
                                   child: controller.isShowAnswers
-                                      ? Container(
-                                          color: Colors.yellow,
-                                          child: Text("True"))
-                                      : Container(
-                                          color: controller.q2_ans1
-                                              ? AppColors.primary_color
-                                              : Colors.white,
-                                          child: Text("True")),
+                                      ? answerWidget("true")
+                                      : quizOptionsWidget(
+                                          "True", controller.q2_ans1),
                                 ),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
-                                    onTap: () {
-                                      controller.isShowAnswers
-                                          ? () {}
-                                          : controller.updateQ2Quiz(2, "False");
-                                    },
-                                    child: Container(
-                                        color: controller.q2_ans2
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("False"))),
+                                  onTap: () {
+                                    controller.isShowAnswers
+                                        ? () {}
+                                        : controller.updateQ2Quiz(2, "False");
+                                  },
+                                  child: quizOptionsWidget(
+                                      "False", controller.q2_ans2),
+                                ),
                               ],
                             ),
                           ),
@@ -159,12 +151,19 @@ class QuizScreen extends GetView<QuizScreenController> {
                             height: 20,
                           ),
                           Container(
+                            padding: EdgeInsets.only(
+                                top: 10, bottom: 10, left: 5, right: 5),
+                            decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(q3),
+                                questionTitle("3.$q3"),
                                 SizedBox(
-                                  height: 5,
+                                  height: 15,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -173,13 +172,10 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           : controller.updateQ3Quiz(
                                               1, "Phonic noises");
                                     },
-                                    child: Container(
-                                        color: controller.q3_ans1
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("Phonic noises"))),
+                                    child: quizOptionsWidget(
+                                        "Phonic noises", controller.q3_ans1)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -188,33 +184,24 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           : controller.updateQ3Quiz(
                                               2, "Yelling");
                                     },
-                                    child: Container(
-                                        color: controller.q3_ans2
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("Yelling"))),
+                                    child: quizOptionsWidget(
+                                        "Yelling", controller.q3_ans2)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    controller.isShowAnswers
-                                        ? () {}
-                                        : controller.updateQ3Quiz(
-                                            3, "Head jerking");
-                                  },
-                                  child: controller.isShowAnswers
-                                      ? Container(
-                                          color: Colors.yellow,
-                                          child: Text("Head jerking"))
-                                      : Container(
-                                          color: controller.q3_ans3
-                                              ? AppColors.primary_color
-                                              : Colors.white,
-                                          child: Text("Head jerking")),
-                                ),
+                                    onTap: () {
+                                      controller.isShowAnswers
+                                          ? () {}
+                                          : controller.updateQ3Quiz(
+                                              3, "Head jerking");
+                                    },
+                                    child: controller.isShowAnswers
+                                        ? answerWidget("Head jerking")
+                                        : quizOptionsWidget("Head jerking",
+                                            controller.q3_ans3)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -223,11 +210,8 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           : controller.updateQ3Quiz(
                                               4, "Throat clearing");
                                     },
-                                    child: Container(
-                                        color: controller.q3_ans4
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("Throat clearing"))),
+                                    child: quizOptionsWidget(
+                                        "Throat clearing", controller.q3_ans4)),
                               ],
                             ),
                           ),
@@ -235,12 +219,18 @@ class QuizScreen extends GetView<QuizScreenController> {
                             height: 20,
                           ),
                           Container(
+                            padding: EdgeInsets.only(
+                                top: 10, bottom: 10, left: 5, right: 5),
+                            decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(q4),
+                                questionTitle("4.$q4"),
                                 SizedBox(
-                                  height: 5,
+                                  height: 15,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -248,32 +238,23 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           ? () {}
                                           : controller.updateQ4Quiz(1, "27%");
                                     },
-                                    child: Container(
-                                        color: controller.q4_ans1
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("27%"))),
+                                    child: quizOptionsWidget(
+                                        "27%", controller.q4_ans1)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    controller.isShowAnswers
-                                        ? () {}
-                                        : controller.updateQ4Quiz(2, "35%");
-                                  },
-                                  child: controller.isShowAnswers
-                                      ? Container(
-                                          color: Colors.yellow,
-                                          child: Text("35%"))
-                                      : Container(
-                                          color: controller.q4_ans2
-                                              ? AppColors.primary_color
-                                              : Colors.white,
-                                          child: Text("35%")),
-                                ),
+                                    onTap: () {
+                                      controller.isShowAnswers
+                                          ? () {}
+                                          : controller.updateQ4Quiz(2, "35%");
+                                    },
+                                    child: controller.isShowAnswers
+                                        ? answerWidget("35%")
+                                        : quizOptionsWidget(
+                                            "35%", controller.q4_ans2)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -281,13 +262,10 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           ? () {}
                                           : controller.updateQ4Quiz(3, "43%");
                                     },
-                                    child: Container(
-                                        color: controller.q4_ans3
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("43%"))),
+                                    child: quizOptionsWidget(
+                                        "43%", controller.q4_ans3)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -295,11 +273,8 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           ? () {}
                                           : controller.updateQ4Quiz(4, "77%");
                                     },
-                                    child: Container(
-                                        color: controller.q4_ans4
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("77%"))),
+                                    child: quizOptionsWidget(
+                                        "77%", controller.q4_ans4)),
                               ],
                             ),
                           ),
@@ -307,12 +282,18 @@ class QuizScreen extends GetView<QuizScreenController> {
                             height: 20,
                           ),
                           Container(
+                            padding: EdgeInsets.only(
+                                top: 10, bottom: 10, left: 5, right: 5),
+                            decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(q5),
+                                questionTitle("5.$q5"),
                                 SizedBox(
-                                  height: 5,
+                                  height: 15,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -320,30 +301,21 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           ? () {}
                                           : controller.updateQ5Quiz(1, "True");
                                     },
-                                    child: Container(
-                                        color: controller.q5_ans1
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("True"))),
+                                    child: quizOptionsWidget(
+                                        "True", controller.q5_ans1)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    controller.isShowAnswers
-                                        ? () {}
-                                        : controller.updateQ5Quiz(2, "False");
-                                  },
-                                  child: controller.isShowAnswers
-                                      ? Container(
-                                          color: Colors.yellow,
-                                          child: Text("False"))
-                                      : Container(
-                                          color: controller.q5_ans2
-                                              ? AppColors.primary_color
-                                              : Colors.white,
-                                          child: Text("False")),
-                                ),
+                                    onTap: () {
+                                      controller.isShowAnswers
+                                          ? () {}
+                                          : controller.updateQ5Quiz(2, "False");
+                                    },
+                                    child: controller.isShowAnswers
+                                        ? answerWidget("False")
+                                        : quizOptionsWidget(
+                                            "False", controller.q5_ans2)),
                               ],
                             ),
                           ),
@@ -351,32 +323,33 @@ class QuizScreen extends GetView<QuizScreenController> {
                             height: 20,
                           ),
                           Container(
+                            padding: EdgeInsets.only(
+                                top: 10, bottom: 10, left: 5, right: 5),
+                            decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(q6),
+                                questionTitle("6.$q6"),
                                 SizedBox(
-                                  height: 5,
+                                  height: 15,
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    controller.isShowAnswers
-                                        ? () {}
-                                        : controller.updateQ6Quiz(
-                                            1, "Manic,Depressive");
-                                  },
-                                  child: controller.isShowAnswers
-                                      ? Container(
-                                          color: Colors.yellow,
-                                          child: Text("Manic,Depressive"))
-                                      : Container(
-                                          color: controller.q6_ans1
-                                              ? AppColors.primary_color
-                                              : Colors.white,
-                                          child: Text("Manic,Depressive")),
-                                ),
+                                    onTap: () {
+                                      controller.isShowAnswers
+                                          ? () {}
+                                          : controller.updateQ6Quiz(
+                                              1, "Manic,Depressive");
+                                    },
+                                    child: controller.isShowAnswers
+                                        ? answerWidget("Manic,Depressive")
+                                        : quizOptionsWidget("Manic,Depressive",
+                                            controller.q6_ans1)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -385,11 +358,8 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           : controller.updateQ6Quiz(
                                               2, "Depressive,Manic");
                                     },
-                                    child: Container(
-                                        color: controller.q6_ans2
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("Depressive,Manic"))),
+                                    child: quizOptionsWidget("Depressive,Manic",
+                                        controller.q6_ans2)),
                               ],
                             ),
                           ),
@@ -397,33 +367,32 @@ class QuizScreen extends GetView<QuizScreenController> {
                             height: 20,
                           ),
                           Container(
+                            padding: EdgeInsets.only(
+                                top: 10, bottom: 10, left: 5, right: 5),
+                            decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(q7),
+                                questionTitle("7.$q7"),
                                 SizedBox(
-                                  height: 5,
+                                  height: 15,
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    controller.isShowAnswers
-                                        ? () {}
-                                        : controller.updateQ7Quiz(1, "True");
-                                  },
-                                  child: controller.isShowAnswers
-                                      ? Container(
-                                          color: Colors.yellow,
-                                          child: Text("True"),
-                                        )
-                                      : Container(
-                                          color: controller.q7_ans1
-                                              ? AppColors.primary_color
-                                              : Colors.white,
-                                          child: Text("True"),
-                                        ),
-                                ),
+                                    onTap: () {
+                                      controller.isShowAnswers
+                                          ? () {}
+                                          : controller.updateQ7Quiz(1, "True");
+                                    },
+                                    child: controller.isShowAnswers
+                                        ? answerWidget("True")
+                                        : quizOptionsWidget(
+                                            "True", controller.q7_ans1)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -431,11 +400,8 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           ? () {}
                                           : controller.updateQ7Quiz(2, "False");
                                     },
-                                    child: Container(
-                                        color: controller.q7_ans2
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("False"))),
+                                    child: quizOptionsWidget(
+                                        "False", controller.q7_ans2)),
                               ],
                             ),
                           ),
@@ -443,12 +409,19 @@ class QuizScreen extends GetView<QuizScreenController> {
                             height: 20,
                           ),
                           Container(
+                            padding: EdgeInsets.only(
+                                top: 10, bottom: 10, left: 5, right: 5),
+                            decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(q8),
+                                questionTitle("8.$q8"),
                                 SizedBox(
-                                  height: 5,
+                                  height: 15,
                                 ),
                                 InkWell(
                                     onTap: () {
@@ -457,37 +430,26 @@ class QuizScreen extends GetView<QuizScreenController> {
                                           : controller.updateQ8Quiz(
                                               1, "Vocal,Motal");
                                     },
-                                    child: Container(
-                                        color: controller.q8_ans1
-                                            ? AppColors.primary_color
-                                            : Colors.white,
-                                        child: Text("Vocal,Motal"))),
+                                    child: quizOptionsWidget(
+                                        "Vocal,Motal", controller.q8_ans1)),
                                 SizedBox(
-                                  height: 5,
+                                  height: 10,
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    controller.isShowAnswers
-                                        ? () {}
-                                        : controller.updateQ8Quiz(
-                                            2, "Motal,Vocal");
-                                  },
-                                  child: controller.isShowAnswers
-                                      ? Container(
-                                          color: Colors.yellow,
-                                          child: Text("Motal,Vocal"))
-                                      : Container(
-                                          color: controller.q8_ans2
-                                              ? AppColors.primary_color
-                                              : Colors.white,
-                                          child: Text("Motal,Vocal")),
-                                ),
+                                    onTap: () {
+                                      controller.isShowAnswers
+                                          ? () {}
+                                          : controller.updateQ8Quiz(
+                                              2, "Motal,Vocal");
+                                    },
+                                    child: controller.isShowAnswers
+                                        ? answerWidget("Motal,Vocal")
+                                        : quizOptionsWidget(
+                                            "Motal,Vocal", controller.q8_ans2)),
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          SizedBox(height: 15,),
                           controller.isShowAnswers
                               ? InkWell(
                                   onTap: () {
@@ -502,7 +464,8 @@ class QuizScreen extends GetView<QuizScreenController> {
                                   ),
                                 )
                               : InkWell(
-                                  onTap: () {
+                                  onTap: ()
+                                  {
                                     // validate all aneswers
                                     print("submit button is clicked");
                                     int count = 0;
@@ -519,23 +482,49 @@ class QuizScreen extends GetView<QuizScreenController> {
                                     if (!isAllMarked) {
                                       Get.defaultDialog(
                                           title:
-                                              "Selet all answers before submitting",
-                                          middleText: "Hello world!",
-                                          backgroundColor: Colors.green,
+                                              "Alert Message !",
+                                          backgroundColor: Colors.white,
                                           titleStyle:
-                                              TextStyle(color: Colors.white),
+                                              TextStyle(color: Colors.black),
                                           middleTextStyle:
                                               TextStyle(color: Colors.white),
                                           cancelTextColor: Colors.white,
                                           confirmTextColor: Colors.white,
                                           buttonColor: Colors.red,
                                           barrierDismissible: false,
-                                          radius: 50,
+                                          radius: 5,
                                           content: Column(
                                             children: [
+                                              //Selet all answers before submitting
+                                              Container(
+                                                  child: Text("Selet all answers before submit", style: GoogleFonts.poppins(
+                                                      textStyle: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.w400,
+                                                      )),textAlign: TextAlign.center,),),
+                                              SizedBox(height: 15,),
                                               InkWell(
                                                 child: Container(
-                                                    child: Text("ok")),
+
+                                                    child: Text("ok",  style: GoogleFonts.poppins(
+                                                        textStyle: TextStyle(
+                                                            fontSize: 13,
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.w500,
+                                                            letterSpacing: 1.5)),),
+
+                                                  decoration: BoxDecoration(
+
+                                                    border: Border.all(color: Colors.blue,width: 1),
+                                                    color: AppColors.neuroverse_Backgroud_Color,
+                                                    borderRadius: BorderRadius.circular(5),
+                                                  ),
+                                                  padding: EdgeInsets.symmetric(horizontal: 10,),
+                                                  alignment: Alignment.center,
+                                                  width: 100,
+                                                  height:35,
+                                                ),
                                                 onTap: () {
                                                   Get.back();
                                                 },
@@ -555,27 +544,55 @@ class QuizScreen extends GetView<QuizScreenController> {
                                     });
                                     Get.defaultDialog(
                                         title:
-                                            "Out of 8 questions $count are correct",
+                                            "Results",
                                         middleText: "Hello world!",
-                                        backgroundColor: Colors.green,
-                                        titleStyle:
-                                            TextStyle(color: Colors.white),
+                                        backgroundColor: Colors.white,
+                                        titleStyle: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                        )),
                                         middleTextStyle:
                                             TextStyle(color: Colors.white),
                                         cancelTextColor: Colors.white,
                                         confirmTextColor: Colors.white,
                                         buttonColor: Colors.red,
                                         barrierDismissible: false,
-                                        radius: 50,
+                                        radius: 5,
                                         content: Column(
                                           children: [
+                                            //Out of 8 questions $count are correct
+                                            Container(
+                                              child: Text("Out of 8 questions $count are correct", style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w400,
+                                                  )),textAlign: TextAlign.center,),),
+                                            SizedBox(height: 15,),
                                             InkWell(
-                                              child:
-                                                  Container(child: Text("ok")),
+                                              child: Container(
+
+                                                child: Text("ok",  style: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                        fontSize: 13,
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.w500,
+                                                        letterSpacing: 1.5)),),
+
+                                                decoration: BoxDecoration(
+
+                                                  border: Border.all(color: Colors.blue,width: 1),
+                                                  color: AppColors.neuroverse_Backgroud_Color,
+                                                  borderRadius: BorderRadius.circular(5),
+                                                ),
+                                                padding: EdgeInsets.symmetric(horizontal: 10,),
+                                                alignment: Alignment.center,
+                                                width: 100,
+                                                height:35,
+                                              ),
                                               onTap: () {
-                                                controller
-                                                    .updateShowAnswerStatus(
-                                                        true);
                                                 Get.back();
                                               },
                                             ),
@@ -586,44 +603,68 @@ class QuizScreen extends GetView<QuizScreenController> {
                                     //
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.all(30),
-                                    color: Colors.blue,
-                                    child: Text("submit"),
+                                    padding: EdgeInsets.only(left: 16,right: 15,top: 10,bottom: 10),
+                                    width: double.infinity,
+                                     alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color:Color(0xFF68BD43),
+                                      borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child: Text("Submit",style: GoogleFonts.palanquin(
+                                        textStyle: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 1.5)),),
                                   ),
-                                )
+                                ),
+                          SizedBox(height: 20,),
                         ],
                       ),
                     ),
                   ))
                 : Scaffold(
                     body: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              controller.updateQuizStatus(true);
-                            },
-                            child: Container(
-                              width: 150,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Color(0xFFa8c2ff),
-                                  borderRadius: BorderRadius.circular(5)),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Start quiz",
-                                style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 1.5)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+
+                            Container(
+                              width: double.infinity,
+                              height: 190,
+                              child: Image(
+                                image: AssetImage(ImagesAndIcons.quiz_image),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 10,),
+                            InkWell(
+                              onTap: () {
+                                controller.updateQuizStatus(true);
+                              },
+                              child: Container(
+                                width: 150,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                    color: Color(0xFFa8c2ff),
+                                    borderRadius: BorderRadius.circular(5)),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Start quiz",
+                                  style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.5)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -732,6 +773,18 @@ class QuizScreen extends GetView<QuizScreenController> {
           )
         ],
       ),
+    );
+  }
+
+  Widget questionTitle(String name) {
+    return Text(
+      name,
+      style: GoogleFonts.poppins(
+          textStyle: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+              letterSpacing: 1.2)),
     );
   }
 }

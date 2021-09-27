@@ -246,7 +246,7 @@ String q2="True or False. Is ADHD a genetic trait? (does is run in families)";
 String q3="Which of the following is a motor tic?";
 String q4="What is the school drop out rate for individuals with dyslexia?";
 String q5="True or False. 12% of people with dyslexia enrolled in college complete all 4 years of undergrad.";
-String q6="Bipolar disorder affects the mood of individuals and causes extreme changes in mood and behavior. These two extremes are called ____ ________ ____ episodes and ____ ____ ____ ____ episodes.";
+String q6="Bipolar disorder affects the mood of individuals and causes extreme changes in mood and behavior. These two extremes are called ________episodes and ______ episodes.";
 String q7="Are boys 3 times more likely to possess autism spectrum disorder (ASD) than girls?";
 String q8="The two types of tics are ____ ____ ____ ____ tics and____ ____ ____ ____ tics";
 

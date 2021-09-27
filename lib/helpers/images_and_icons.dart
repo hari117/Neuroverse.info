@@ -45,4 +45,6 @@ class ImagesAndIcons
 
   static  String app_logo="assets/images/app_logo.jpeg";
 
+  static  String quiz_image="assets/images/quiz_image.png";
+
 }
