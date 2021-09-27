@@ -29,3 +29,4 @@ export 'package:neuroverse/services/firebase_service.dart';
 export 'package:neuroverse/services/auth_services/google_auth.dart';
 export 'package:firebase_database/firebase_database.dart';
 export 'package:neuroverse/models/user_model.dart';
+export 'package:url_launcher/url_launcher.dart';

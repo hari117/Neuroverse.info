@@ -45,7 +45,7 @@ dev_dependencies:
   firebase_database :
   path_provider :
   intl :
-
+  url_launcher :
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
