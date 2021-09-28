@@ -8,7 +8,6 @@ class GoogleService extends GetxController
    late GoogleSignIn _googleSignIn;
    GoogleSignInAccount? _currentUser;
 
-  late final firebaseInstance;
    late final localDbInstance;
     final firebaseController =Get.find<FirebaseService>();
    final settingsController =Get.find<SettingsScreenController>();
@@ -16,18 +15,13 @@ class GoogleService extends GetxController
 
   var box;
 
-   GoogleService()
-  {
 
-    firebaseInstance=Get.find<FirebaseService>();
-    localDbInstance= Get.find<LocalStorage>();
-    _googleSignIn=GoogleSignIn();
-   box = Hive.openBox(Keywords.app_Name);
-  }
+
 
   getGoogleInstance () => _googleSignIn;
 
    googleLogin() async{
+     print("login in button pressed");
 
    await _googleSignIn.signIn().then((value) async{
 
@@ -109,5 +103,11 @@ class GoogleService extends GetxController
     await _googleSignIn.signOut();
    }
 
-
+   @override
+  void onInit() {
+     print("init funtion called for google service activation");
+     localDbInstance= Get.find<LocalStorage>();
+     _googleSignIn=GoogleSignIn();
+     box = Hive.openBox(Keywords.app_Name);
+  }
 }

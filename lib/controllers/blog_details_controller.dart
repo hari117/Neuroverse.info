@@ -7,24 +7,24 @@ import 'package:intl/intl.dart';
 class BlogDetailsController extends GetxController {
   late GoogleService googleInstance;
 
-  late FirebaseService firebaseInstance;
-   late final Box box;
+   late final Box box= Hive.box(Keywords.app_Name);
 
    TextEditingController reviewController=TextEditingController();
   @override
   void onInit() {
 
-    box= Hive.box(Keywords.app_Name);
-    googleInstance = Get.find<GoogleService>();
-    firebaseInstance = Get.find<FirebaseService>();
+    googleInstance=Get.find<GoogleService>();
+
     googleInstance.googleStream();
     print("on init funtion called");
+    update();
   }
 
-  @override
-  void onReady() {
-    print("on ready funtion called");
-  }
+
+
+
+
+
 
   loginToGoogle() {
     googleInstance.googleLogin();

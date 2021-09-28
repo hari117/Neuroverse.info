@@ -14,6 +14,9 @@ void main() async{
  await Hive.openBox(Keywords.app_Name);
 
  await Firebase.initializeApp();
+
+
+
   runApp(MyApp());
 }
 
