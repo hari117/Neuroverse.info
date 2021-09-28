@@ -41,8 +41,7 @@ class EditProfileController extends GetxController {
 
     if (pickedImageData != null) {
       await FirebaseStorage.instance
-          .ref()
-          .child('ProfilePictures/${nameChangeController.text}')
+          .ref('ProfilePictures/${nameChangeController.text}')
           .putFile(pickedImageData)
           .then((value) {
             print("************");
