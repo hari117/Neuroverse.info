@@ -458,9 +458,19 @@ class QuizScreen extends GetView<QuizScreenController> {
                                     controller.resetAllQuizValues();
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.all(30),
-                                    color: Colors.blue,
-                                    child: Text("Finish"),
+                                    padding: EdgeInsets.only(left: 16,right: 15,top: 10,bottom: 10),
+                                    width: double.infinity,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color:Color(0xFFa8c2ff),
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child: Text("Start Quiz Again ?",style: GoogleFonts.palanquin(
+                                        textStyle: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 1.5)),),
                                   ),
                                 )
                               : InkWell(
@@ -526,6 +536,7 @@ class QuizScreen extends GetView<QuizScreenController> {
                                                   height:35,
                                                 ),
                                                 onTap: () {
+                                                  controller.resetAllQuizValues();
                                                   Get.back();
                                                 },
                                               ),
@@ -593,7 +604,10 @@ class QuizScreen extends GetView<QuizScreenController> {
                                                 height:35,
                                               ),
                                               onTap: () {
+                                                controller.updateShowAnswerStatus(true);
                                                 Get.back();
+
+
                                               },
                                             ),
                                           ],

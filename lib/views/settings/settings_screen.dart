@@ -147,29 +147,34 @@ class SettingsScreen extends GetView<SettingsScreenController>
                         )
                       ),
 
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.only(top: 15,bottom: 15,left: 5),
-                        margin: EdgeInsets.only(top: 15),
-                        alignment: Alignment.centerLeft,
+                      InkWell(
+                        onTap: (){
+                      //    Get.to(EditProfileController());
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.only(top: 15,bottom: 15,left: 5),
+                          margin: EdgeInsets.only(top: 15),
+                          alignment: Alignment.centerLeft,
 
-                        decoration: BoxDecoration(
-                          color: AppColors.neuroverse_Backgroud_Color,
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        child: Row(
+                          decoration: BoxDecoration(
+                            color: AppColors.neuroverse_Backgroud_Color,
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                          child: Row(
 
-                            children: [
-                              SizedBox(width: 8,),
-                              Container(
-                                width: 25,
-                                height: 20,
-                                child: Image(
+                              children: [
+                                SizedBox(width: 8,),
+                                Container(
+                                  width: 25,
+                                  height: 20,
+                                  child: Image(
 
-                                  image: AssetImage(ImagesAndIcons.profile_edit,),),
-                              ),SizedBox(width: 8,),
-                              settingsText("Profile Edit")
-                            ],
+                                    image: AssetImage(ImagesAndIcons.profile_edit,),),
+                                ),SizedBox(width: 8,),
+                                settingsText("Profile Edit")
+                              ],
+                          ),
                         ),
                       ),
                       Container(
@@ -245,30 +250,117 @@ class SettingsScreen extends GetView<SettingsScreenController>
                             ],
                         ),
                       ),
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.only(top: 15,bottom: 15,left: 5),
-                        margin: EdgeInsets.only(top: 15),
-                        alignment: Alignment.centerLeft,
+                      InkWell(
+                        onTap: (){
+                          print("logout called");
+                          Get.defaultDialog(
+                              title:
+                              "Are you sure you want to logout ?",
+                              middleText: "Hello world!",
+                              backgroundColor: Colors.white,
+                              titleStyle: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                              middleTextStyle:
+                              TextStyle(color: Colors.white),
+                              cancelTextColor: Colors.white,
+                              confirmTextColor: Colors.white,
+                              buttonColor: Colors.red,
+                              barrierDismissible: false,
+                              radius: 5,
+                              content: Column(
+                                children: [
 
-                        decoration: BoxDecoration(
-                            color: AppColors.neuroverse_Backgroud_Color,
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        child:Row(
-                            children: [
-                              SizedBox(width: 8,),
-                              Container(
-                                width: 25,
-                                height: 20,
-                                child: Image(
-                                  color: Colors.red,
+                                  Row(
 
-                                  image: AssetImage(ImagesAndIcons.logout,),),
-                              ),SizedBox(width: 8,),
-                              settingsText("Logout")
-                            ],
+                                    children: [
+                                      InkWell(
+                                        child: Container(
 
+                                          child: Text("Cancel",  style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing: 1.5)),),
+
+                                          decoration: BoxDecoration(
+
+                                            //border: Border.all(color: Colors.blue,width: 1),
+                                            color: AppColors.neuroverse_Backgroud_Color,
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          padding: EdgeInsets.symmetric(horizontal: 10,),
+                                          alignment: Alignment.center,
+                                          width: 100,
+                                          height:35,
+                                        ),
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                      ),
+                                      InkWell(
+                                        child: Container(
+
+                                          child: Text("Logout",  style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing: 1.5)),),
+
+                                          decoration: BoxDecoration(
+
+                                            border: Border.all(color: Colors.red,width: 2),
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          padding: EdgeInsets.symmetric(horizontal: 10,),
+                                          alignment: Alignment.center,
+                                          width: 100,
+                                          height:35,
+                                        ),
+                                        onTap: () async{
+                                         await controller.logout();
+                                          Get.back();
+                                        },
+                                      ),
+                                    ],
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  ),
+
+                                ],
+                              ));
+                         //
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.only(top: 15,bottom: 15,left: 5),
+                          margin: EdgeInsets.only(top: 15),
+                          alignment: Alignment.centerLeft,
+
+                          decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          child:Row(
+                              children: [
+                                SizedBox(width: 8,),
+                                Container(
+                                  width: 25,
+                                  height: 20,
+                                  child: Image(
+                                    color: Colors.red,
+
+                                    image: AssetImage(ImagesAndIcons.logout,),),
+                                ),SizedBox(width: 8,),
+                                settingsText("Logout")
+                              ],
+
+                          ),
                         ),
                       ),
 
@@ -310,13 +402,17 @@ class SettingsScreen extends GetView<SettingsScreenController>
            mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20,),
-           Text("Sign in or Sign up in the given options"),
-            SizedBox(height: 25,),
+            SizedBox(height: 15,),
+           Text("Sign in or Sign up in the given options",style:GoogleFonts.palanquin(
+               textStyle: TextStyle(
+                   fontSize: 18,
+                   color: Colors.black,
+                   fontWeight: FontWeight.w500,)),),
+            SizedBox(height: 15,),
             Container(
 
               width: MediaQuery.of(context).size.width * .8,
-              padding: EdgeInsets.symmetric(horizontal: 40,vertical: 10),
+              padding: EdgeInsets.only(top: 10,bottom: 10,left: MediaQuery.of(context).size.width * .1),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: AppColors.neuroverse_Backgroud_Color
@@ -326,11 +422,17 @@ class SettingsScreen extends GetView<SettingsScreenController>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    child: Image(
-                      image: AssetImage(ImagesAndIcons.google),
+                  InkWell(
+                    onTap:(){
+                      controller.login();
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      child: Image(
+                        image: AssetImage(ImagesAndIcons.google),
+                      ),
                     ),
                   ),
                   SizedBox(width: 10,),
@@ -347,38 +449,7 @@ class SettingsScreen extends GetView<SettingsScreenController>
             Container(
 
               width: MediaQuery.of(context).size.width * .8,
-              padding: EdgeInsets.symmetric(horizontal: 40,vertical: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.neuroverse_Backgroud_Color
-              ),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    child: Image(
-                      image: AssetImage(ImagesAndIcons.twitter),
-                    ),
-                  ),
-                  SizedBox(width: 10,),
-                  Text("Face Book",style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          // fontWeight: FontWeight.w500,
-                          letterSpacing: 1.0)),)
-                ],
-              ),
-            ),
-            SizedBox(height: 15,),
-            Container(
-
-              width: MediaQuery.of(context).size.width * .8,
-              padding: EdgeInsets.symmetric(horizontal: 40,vertical: 10),
+              padding: EdgeInsets.only(top: 10,bottom: 10,left: MediaQuery.of(context).size.width * .1),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: AppColors.neuroverse_Backgroud_Color
@@ -393,6 +464,37 @@ class SettingsScreen extends GetView<SettingsScreenController>
                     height: 30,
                     child: Image(
                       image: AssetImage(ImagesAndIcons.fb),
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  Text("FaceBook",style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          // fontWeight: FontWeight.w500,
+                          letterSpacing: 1.0)),)
+                ],
+              ),
+            ),
+            SizedBox(height: 15,),
+            Container(
+
+              width: MediaQuery.of(context).size.width * .8,
+              padding: EdgeInsets.only(top: 10,bottom: 10,left: MediaQuery.of(context).size.width * .1),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.neuroverse_Backgroud_Color
+              ),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 30,
+                    height: 30,
+                    child: Image(
+                      image: AssetImage(ImagesAndIcons.twitter),
                     ),
                   ),
                   SizedBox(width: 10,),

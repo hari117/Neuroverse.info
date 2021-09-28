@@ -11,6 +11,8 @@ initControllers(){
       Get.lazyPut<BlogsScreenController>(() => BlogsScreenController());
       Get.lazyPut<BlogDetailsController>(() => BlogDetailsController());
       Get.lazyPut<QuizScreenController>(() => QuizScreenController());
+
+
       Get.lazyPut<SettingsScreenController>(() => SettingsScreenController());
       Get.lazyPut<SingleBlogController>(() => SingleBlogController());
       Get.lazyPut<LocalStorage>(() => LocalStorage());
@@ -18,6 +20,8 @@ initControllers(){
 
       Get.lazyPut<FirebaseService>(() => FirebaseService());
 
+
+     // Get.lazyPut<EditProfileController>(() => EditProfileController());
 
 
 

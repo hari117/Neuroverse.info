@@ -5,22 +5,23 @@ class SettingsScreenController extends GetxController
 
 
  Map<dynamic,dynamic> userData={};
- late final Box box;
+ late final Box box= Hive.box(Keywords.app_Name);
 
  String url="https://www.neuroverse.info/";
 
- late GoogleService googleInstance;
 
    bool isLoading =false;
 
    bool isLogin=false;
 
+ late GoogleService google;
+
   @override
   Future<void> onInit() async {
-
+    print("calling oninit funtion again");
+    google=Get.find<GoogleService>();
     isLoading=true;
-    googleInstance = Get.find<GoogleService>();
-    box= Hive.box(Keywords.app_Name);
+
     isLogin= await checkUserIsLoginOrNot();
 
     if(isLogin)
@@ -47,7 +48,30 @@ class SettingsScreenController extends GetxController
     return tocken=="" || tocken==null ?false : true;
   }
 
+  initFun()async{
 
+    print("initfun called");
+    isLoading=true;
+
+    isLogin= await checkUserIsLoginOrNot();
+
+    if(isLogin)
+    {
+      DataSnapshot blodData =await FirebaseDatabase.instance
+          .reference()
+          .child("UserInformation")
+          .child(box.get("token"))
+
+          .once();
+
+      userData=blodData!.value;
+
+    }
+
+
+    isLoading=false;
+    update();
+  }
 
 
 
@@ -59,10 +83,21 @@ class SettingsScreenController extends GetxController
   }
 
 
+
+
    logout()
-   {
+   async{
+    await google.googleSignOut();
+    await box.clear();
+     await initFun();
+   update();
+   }
 
-
+   login()
+   async{
+     await google.googleLogin();
+     await initFun();
+        update();
    }
 
 

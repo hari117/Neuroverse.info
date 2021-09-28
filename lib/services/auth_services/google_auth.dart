@@ -11,6 +11,9 @@ class GoogleService extends GetxController
   late final firebaseInstance;
    late final localDbInstance;
     final firebaseController =Get.find<FirebaseService>();
+   final settingsController =Get.find<SettingsScreenController>();
+
+
   var box;
 
    GoogleService()
@@ -26,7 +29,7 @@ class GoogleService extends GetxController
 
    googleLogin() async{
 
-    _googleSignIn.signIn().then((value) {
+   await _googleSignIn.signIn().then((value) async{
 
       Map<String,dynamic> model={
       "displayName":value!.displayName,
@@ -34,11 +37,11 @@ class GoogleService extends GetxController
       "email":value !.email,
       "photoUrl":value!.photoUrl,
       };
-      Hive.box(Keywords.app_Name)..put("token",value!.id);
-      FirebaseDatabase.instance.reference().child(Keywords.UserInfoDb).child(value!.id).set(model);
+     await  Hive.box(Keywords.app_Name)..put("token",value!.id);
+      await FirebaseDatabase.instance.reference().child(Keywords.UserInfoDb).child(value!.id).set(model);
 
 
-      FirebaseDatabase.instance.reference().child("UserLikesAndDisLikes").child(value!.id).set(
+     await FirebaseDatabase.instance.reference().child("UserLikesAndDisLikes").child(value!.id).set(
           {
 
             "c3_blog":{
@@ -82,7 +85,7 @@ class GoogleService extends GetxController
           );
 
      });
-
+    await settingsController.initFun();
 
 
    }
@@ -102,8 +105,8 @@ class GoogleService extends GetxController
 
 
    googleSignOut()
-   {
-     _googleSignIn.signOut();
+   async{
+    await _googleSignIn.signOut();
    }
 
 
