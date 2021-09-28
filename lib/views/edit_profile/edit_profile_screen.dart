@@ -80,7 +80,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                       SizedBox(height: 8,),
                       InkWell(
                         onTap: (){
-                          controller.selectFile();
+                        controller.isLoading?null:  controller.selectFile();
                         },
                         child: Container(
 
@@ -113,7 +113,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   alignment: Alignment.center,
-                  child: Text("Update",style: GoogleFonts.palanquin(
+                  child:controller.isButtonLoading ?Container( width:10,height:10,child: CircularProgressIndicator())  : Text("Update",style: GoogleFonts.palanquin(
                   textStyle: TextStyle(
                       fontSize: 16,
                       color: Colors.black,

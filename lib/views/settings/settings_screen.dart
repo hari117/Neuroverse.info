@@ -149,8 +149,9 @@ class SettingsScreen extends GetView<SettingsScreenController>
 
                       controller.isLogin?InkWell(
                         onTap: (){
-                          print("edit page button clicked");
-                       Get.to(EditProfileScreen());
+                       Get.to(EditProfileScreen())!.then((value) {
+                         controller.initFun();
+                       });
                         },
                         child: Container(
                           width: double.infinity,
@@ -173,7 +174,7 @@ class SettingsScreen extends GetView<SettingsScreenController>
 
                                     image: AssetImage(ImagesAndIcons.profile_edit,),),
                                 ),SizedBox(width: 8,),
-                                settingsText("Profile Edit")
+                                settingsText("Profile edit")
                               ],
                           ),
                         ),
@@ -203,29 +204,35 @@ class SettingsScreen extends GetView<SettingsScreenController>
 
                             ),
                       ),
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.only(top: 15,bottom: 15,left: 5),
-                        margin: EdgeInsets.only(top: 15),
-                        alignment: Alignment.centerLeft,
+                      InkWell(
+                        onTap: (){
+                          controller.openWebsite();
 
-                        decoration: BoxDecoration(
-                            color: AppColors.neuroverse_Backgroud_Color,
-                            borderRadius: BorderRadius.circular(10)
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.only(top: 15,bottom: 15,left: 5),
+                          margin: EdgeInsets.only(top: 15),
+                          alignment: Alignment.centerLeft,
+
+                          decoration: BoxDecoration(
+                              color: AppColors.neuroverse_Backgroud_Color,
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          child: Row(
+                              children: [
+                                SizedBox(width: 8,),
+                                Container(
+                                  width: 25,
+                                  height: 21,
+                                  child: Image(
+
+                                    image: AssetImage(ImagesAndIcons.visit,),),
+                                ),SizedBox(width: 8,),
+                                settingsText("Visit our website")
+                              ],
+                               ),
                         ),
-                        child: Row(
-                            children: [
-                              SizedBox(width: 8,),
-                              Container(
-                                width: 25,
-                                height: 21,
-                                child: Image(
-
-                                  image: AssetImage(ImagesAndIcons.visit,),),
-                              ),SizedBox(width: 8,),
-                              settingsText("Visit our website")
-                            ],
-                             ),
                       ),
                       Container(
                         width: double.infinity,

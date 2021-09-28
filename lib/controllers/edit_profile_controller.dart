@@ -11,6 +11,7 @@ class EditProfileController extends GetxController {
   late final Box box = Hive.box(Keywords.app_Name);
   bool isLoading = false;
 
+  bool isButtonLoading=false;
   String photoUrl = "";
 
   @override
@@ -37,49 +38,44 @@ class EditProfileController extends GetxController {
   }
 
   updateUserProfile() async {
+    isButtonLoading=true;
     // store image in firebase and get the url
-
+    Map<String,dynamic> data={};
+    data["displayName"]=nameChangeController.text;
     if (pickedImageData != null) {
+
       await FirebaseStorage.instance
           .ref('ProfilePictures/${nameChangeController.text}')
           .putFile(pickedImageData)
-          .then((value) {
+          .then((value) async{
             print("************");
-            print(value.ref.fullPath);
+          String newProfileUrl= await value.ref.getDownloadURL();
+            data["photoUrl"]=newProfileUrl;
+            await FirebaseDatabase.instance
+                .reference()
+                .child("UserInformation")
+                .child(box.get("token") ?? "")
+                .update(data);
+
+            update();
+            Get.back();
+
+          print("download url is $newProfileUrl ");
             print("************");
 
       });
-    } else {}
+    } else {
+      await FirebaseDatabase.instance
+          .reference()
+          .child("UserInformation")
+          .child(box.get("token") ?? "")
+          .update(data);
 
+    }
+    isButtonLoading=false;
+     update();
     // update the url in user profile image
   }
-/*
 
-extends State<UploadingImageToFirebaseStorage> {
-  File _imageFile;
-
-  ...
-
-  Future uploadImageToFirebase(BuildContext context) async {
-
-
-    String fileName = basename(_imageFile.path);
-
-
-    StorageReference firebaseStorageRef =  FirebaseStorage.instance.ref().child('uploads/$fileName');
-
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
-
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-
-    taskSnapshot.ref.getDownloadURL().then(
-          (value) => print("Done: $value"),
-        );
-  }
-  ...
-}
-
-
- */
 
 }

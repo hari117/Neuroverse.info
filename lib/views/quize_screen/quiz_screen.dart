@@ -536,7 +536,7 @@ class QuizScreen extends GetView<QuizScreenController> {
                                                   height:35,
                                                 ),
                                                 onTap: () {
-                                                  controller.resetAllQuizValues();
+                                                 // controller.resetAllQuizValues();
                                                   Get.back();
                                                 },
                                               ),
