@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>299633375086-jstm7d4oqv5j8idbnn7h2u9f0ldhgrrv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.299633375086-jstm7d4oqv5j8idbnn7h2u9f0ldhgrrv</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>299633375086-1fvq47luk5or1vphq6bttqik33celp0d.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDMxXXVWnMDiEVwJTMLbkxSTSHLkywUKkU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>299633375086</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>info.neuroverseDev.neuroverse</string>
+	<key>PROJECT_ID</key>
+	<string>neuroverse-info</string>
+	<key>STORAGE_BUCKET</key>
+	<string>neuroverse-info.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:299633375086:ios:851ec1ec0ce617672eb37f</string>
+	<key>DATABASE_URL</key>
+	<string>https://neuroverse-info-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
