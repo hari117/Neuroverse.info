@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart' as path;
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async{
+ await initControllers();
  WidgetsFlutterBinding.ensureInitialized();
   Directory appDocDir = await path.getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialBinding: initControllers(),
+
       theme: ThemeData(
         // is not restarted.
         primarySwatch: Colors.blue,
