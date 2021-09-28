@@ -31,3 +31,6 @@ export 'package:firebase_database/firebase_database.dart';
 export 'package:neuroverse/models/user_model.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:neuroverse/controllers/edit_profile_controller.dart';
+export 'package:neuroverse/views/edit_profile/edit_profile_screen.dart';
+export 'package:image_picker/image_picker.dart';
+export 'package:firebase_storage/firebase_storage.dart';

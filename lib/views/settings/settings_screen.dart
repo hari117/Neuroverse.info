@@ -147,9 +147,10 @@ class SettingsScreen extends GetView<SettingsScreenController>
                         )
                       ),
 
-                      InkWell(
+                      controller.isLogin?InkWell(
                         onTap: (){
-                      //    Get.to(EditProfileController());
+                          print("edit page button clicked");
+                       Get.to(EditProfileScreen());
                         },
                         child: Container(
                           width: double.infinity,
@@ -176,7 +177,7 @@ class SettingsScreen extends GetView<SettingsScreenController>
                               ],
                           ),
                         ),
-                      ),
+                      ):Container(),
                       Container(
                         width: double.infinity,
                         padding: EdgeInsets.only(top: 15,bottom: 15,left: 5),

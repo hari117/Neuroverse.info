@@ -14,12 +14,12 @@ class SettingsScreenController extends GetxController
 
    bool isLogin=false;
 
- late GoogleService google;
+ late GoogleService google=Get.find<GoogleService>();
 
   @override
   Future<void> onInit() async {
     print("calling oninit funtion again");
-    google=Get.find<GoogleService>();
+   // google=Get.find<GoogleService>();
     isLoading=true;
 
     isLogin= await checkUserIsLoginOrNot();
@@ -100,7 +100,9 @@ class SettingsScreenController extends GetxController
         update();
    }
 
-
-
-
+ @override
+  void onClose() {
+//
+   google.dispose();
+  }
 }

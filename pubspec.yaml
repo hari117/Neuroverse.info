@@ -47,6 +47,8 @@ dev_dependencies:
   intl :
   url_launcher :
   font_awesome_flutter :
+  image_picker :
+  firebase_storage :
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
