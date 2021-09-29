@@ -5,42 +5,45 @@ class GoogleService extends GetxController
 {
 
 
-   late GoogleSignIn _googleSignIn;
-   GoogleSignInAccount? _currentUser;
+  late GoogleSignIn _googleSignIn;
+  GoogleSignInAccount? _currentUser;
 
-   late final localDbInstance;
-    final firebaseController =Get.find<FirebaseService>();
-   final settingsController =Get.find<SettingsScreenController>();
+  late final localDbInstance;
+  final settingsController =Get.find<SettingsScreenController>();
 
 
   var box;
 
+  GoogleService()
+  {
 
-
+    localDbInstance= Get.find<LocalStorage>();
+    _googleSignIn=GoogleSignIn();
+    box = Hive.openBox(Keywords.app_Name);
+  }
 
   getGoogleInstance () => _googleSignIn;
 
-   googleLogin() async{
-     print("login in button pressed");
+  googleLogin() async{
 
-   await _googleSignIn.signIn().then((value) async{
+    await _googleSignIn.signIn().then((value) async{
 
       Map<String,dynamic> model={
-      "displayName":value!.displayName,
-      "id":value!.id,
-      "email":value !.email,
-      "photoUrl":value!.photoUrl,
+        "displayName":value!.displayName,
+        "id":value!.id,
+        "email":value !.email,
+        "photoUrl":value!.photoUrl,
       };
-     await  Hive.box(Keywords.app_Name)..put("token",value!.id);
+      await  Hive.box(Keywords.app_Name)..put("token",value!.id);
       await FirebaseDatabase.instance.reference().child(Keywords.UserInfoDb).child(value!.id).set(model);
 
 
-     await FirebaseDatabase.instance.reference().child("UserLikesAndDisLikes").child(value!.id).set(
+      await FirebaseDatabase.instance.reference().child("UserLikesAndDisLikes").child(value!.id).set(
           {
 
             "c3_blog":{
-            "like":0,
-            "dislike":0
+              "like":0,
+              "dislike":0
             },
             "c4_blog":{
               "like":0,
@@ -76,38 +79,32 @@ class GoogleService extends GetxController
 
 
 
-          );
+      );
 
-     });
+    });
     await settingsController.initFun();
 
 
-   }
-
-
-   googleStream()
-   {
-     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-
-       if (_currentUser != null)
-         _currentUser = account;
-
-     });
-     _googleSignIn.signInSilently();
-     update();
-   }
-
-
-   googleSignOut()
-   async{
-    await _googleSignIn.signOut();
-   }
-
-   @override
-  void onInit() {
-     print("init funtion called for google service activation");
-     localDbInstance= Get.find<LocalStorage>();
-     _googleSignIn=GoogleSignIn();
-     box = Hive.openBox(Keywords.app_Name);
   }
+
+
+  googleStream()
+  {
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+
+      if (_currentUser != null)
+        _currentUser = account;
+
+    });
+    _googleSignIn.signInSilently();
+    update();
+  }
+
+
+  googleSignOut()
+  async{
+    await _googleSignIn.signOut();
+  }
+
+
 }

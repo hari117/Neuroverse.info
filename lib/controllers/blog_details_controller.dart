@@ -1,30 +1,57 @@
 import 'dart:math';
+import 'package:intl/intl.dart';
+import 'package:share/share.dart';
 
 import 'package:neuroverse/helpers/imports_and_exports.dart';
-import 'package:neuroverse/services/auth_services/google_auth.dart';
-import 'package:intl/intl.dart';
 
 class BlogDetailsController extends GetxController {
   late GoogleService googleInstance;
 
-   late final Box box= Hive.box(Keywords.app_Name);
+  late FirebaseService firebaseInstance;
+  late final Box box=Hive.box(Keywords.app_Name);
 
-   TextEditingController reviewController=TextEditingController();
+  TextEditingController reviewController=TextEditingController();
+
+
+  Map<dynamic,dynamic> userData={};
+
+
+  bool isLoading =false;
+  bool isLoginIn=false;
+
   @override
-  void onInit() {
-
-    googleInstance=Get.find<GoogleService>();
-
+  void onInit() async{
+    isLoading=true;
+    await checkIsUserLogin();
+    googleInstance = Get.find<GoogleService>();
+    firebaseInstance = Get.find<FirebaseService>();
     googleInstance.googleStream();
-    print("on init funtion called");
+    print("user login or not ? $isLoginIn");
+    if(isLoginIn)
+    {
+      DataSnapshot blodData =await FirebaseDatabase.instance
+          .reference()
+          .child("UserInformation")
+          .child(box.get("token"))
+          .once();
+
+      userData=blodData!.value;
+      print("the user data is ${userData}");
+    }else
+    {
+      print("no user login");
+    }
+    isLoading=false;
     update();
+
+
+
   }
 
-
-
-
-
-
+  @override
+  void onReady() {
+    print("on ready funtion called");
+  }
 
   loginToGoogle() {
     googleInstance.googleLogin();
@@ -54,11 +81,11 @@ class BlogDetailsController extends GetxController {
     Map<dynamic,dynamic> data=blodData!.value;
 
 
-       if(type=="like")
-         {
-           int likeCount =firebaseBlogCount["like"];
-           int dislikeCount =firebaseBlogCount["dislike"];
-           Map<String,dynamic> tempMap={};
+    if(type=="like")
+    {
+      int likeCount =firebaseBlogCount["like"];
+      int dislikeCount =firebaseBlogCount["dislike"];
+      Map<String,dynamic> tempMap={};
 /*           if(data["like"]==1)
              {
                tempMap["like"] = 0;
@@ -73,45 +100,52 @@ class BlogDetailsController extends GetxController {
                  dislikeCount=dislikeCount-1;
                  // need to update blog count
                }*/
-           if(data["like"]==1){
+      if(data["like"]==1){
 
-           }else
-             {
-               tempMap["like"] = 1;
-               tempMap["dislike"] = 0;
-               likeCount=likeCount+1;
-               dislikeCount=dislikeCount-1;
-             }
+      }else
+      {
+        tempMap["like"] = 1;
+        tempMap["dislike"] = 0;
+        likeCount=likeCount+1;
+        if(dislikeCount==0)
+        {
 
+        }else
+        {
+          dislikeCount=dislikeCount-1;
+        }
 
-           // push to firbease blog count
-
-              Map<String,dynamic> updateCount={};
-           updateCount["like"]=likeCount;
-           print("the runtime type is ${firebaseBlogCount["dislike"].runtimeType}");
-           updateCount["dislike"]=dislikeCount;
-           await FirebaseDatabase.instance
-               .reference()
-               .child("BlogsCounts")
-               .child(blogId)
-               .update(updateCount);
+      }
 
 
-           await FirebaseDatabase.instance
-               .reference()
-               .child("UserLikesAndDisLikes")
-               .child(box.get("token"))
-               .child(blogId)
-               .update(tempMap);
+      // push to firbease blog count
 
-         }
+      Map<String,dynamic> updateCount={};
+      updateCount["like"]=likeCount;
+      print("the runtime type is ${firebaseBlogCount["dislike"].runtimeType}");
+      updateCount["dislike"]=dislikeCount;
+      await FirebaseDatabase.instance
+          .reference()
+          .child("BlogsCounts")
+          .child(blogId)
+          .update(updateCount);
 
-        if(type == "dislike")
-          {
-            int dislikeCount =firebaseBlogCount["dislike"];
-            int likeCount =firebaseBlogCount["like"];
-            Map<String,dynamic> tempMap={};
- /*           if(data["dislike"]==1)
+
+      await FirebaseDatabase.instance
+          .reference()
+          .child("UserLikesAndDisLikes")
+          .child(box.get("token"))
+          .child(blogId)
+          .update(tempMap);
+
+    }
+
+    if(type == "dislike")
+    {
+      int dislikeCount =firebaseBlogCount["dislike"];
+      int likeCount =firebaseBlogCount["like"];
+      Map<String,dynamic> tempMap={};
+      /*           if(data["dislike"]==1)
             {
               tempMap["like"] = 0;
               tempMap["dislike"] = 0;
@@ -127,87 +161,114 @@ class BlogDetailsController extends GetxController {
              likeCount=likeCount-1;
               // need to update blog count
             }*/
-            if(data["dislike"]==1){
+      if(data["dislike"]==1){
 
-            }else {
-              tempMap["like"] = 0;
-              tempMap["dislike"] = 1;
-              dislikeCount = dislikeCount + 1;
-              likeCount = likeCount - 1;
-            }
+      }else {
+        tempMap["like"] = 0;
+        tempMap["dislike"] = 1;
+        dislikeCount = dislikeCount + 1;
+        if(likeCount==0)
+        {
 
-            Map<String,dynamic> updateCount={};
-            updateCount["dislike"]=dislikeCount;
+        }else{
+          likeCount = likeCount - 1;
+        }
 
-            updateCount["like"]=likeCount;
-            await FirebaseDatabase.instance
-                .reference()
-                .child("BlogsCounts")
-                .child(blogId)
-                .update(updateCount);
+      }
 
+      Map<String,dynamic> updateCount={};
+      updateCount["dislike"]=dislikeCount;
 
-
-
-            await FirebaseDatabase.instance
-                .reference()
-                .child("UserLikesAndDisLikes")
-                .child(box.get("token"))
-                .child(blogId)
-                .update(tempMap);
-          }
+      updateCount["like"]=likeCount;
+      await FirebaseDatabase.instance
+          .reference()
+          .child("BlogsCounts")
+          .child(blogId)
+          .update(updateCount);
 
 
 
 
-   // updataTotalCounts(blogId,type);
+      await FirebaseDatabase.instance
+          .reference()
+          .child("UserLikesAndDisLikes")
+          .child(box.get("token"))
+          .child(blogId)
+          .update(tempMap);
+    }
+
+
+
+
+    // updataTotalCounts(blogId,type);
   }
 
 
 
   // review add funtion
 
-    addReview(String blogId)
-    async{
+  addReview(String blogId)
+  async{
 
 
-      DataSnapshot blodData =await FirebaseDatabase.instance
-          .reference()
-          .child("UserInformation")
-          .child(box.get("token"))
-          .once();
+    DataSnapshot blodData =await FirebaseDatabase.instance
+        .reference()
+        .child("UserInformation")
+        .child(box.get("token"))
+        .once();
 
-      Map<dynamic,dynamic> userData=blodData!.value;
+    Map<dynamic,dynamic> userData=blodData!.value;
 
 
     Random random=Random();
-      await FirebaseDatabase.instance
-          .reference()
-          .child("Reviews")
+    await FirebaseDatabase.instance
+        .reference()
+        .child("Reviews")
 
-          .child(blogId).child(random.nextInt(15).toString())
-          .set({
-        "text":reviewController.text,
-        "userId":box.get("token"),
-        "Date":"${DateFormat.yMd().add_jm().format(DateTime.now())}",
-        "imageUrl":userData["photoUrl"],
-        "userName":userData["displayName"],
-        "docId":random.nextInt(15).toString()
-      });
-      reviewController.clear();
-    }
-
-
-    deleteReView(String blogId,String docId)
-   async {
-      await FirebaseDatabase.instance
-          .reference()
-          .child("Reviews")
-
-          .child(blogId).child(docId).remove();
+        .child(blogId).child(random.nextInt(15).toString())
+        .set({
+      "text":reviewController.text,
+      "userId":box.get("token"),
+      "Date":"${DateFormat.yMd().add_jm().format(DateTime.now())}",
+      "imageUrl":userData["photoUrl"],
+      "userName":userData["displayName"],
+      "docId":random.nextInt(15).toString()
+    });
+    reviewController.clear();
+  }
 
 
-    }
+  deleteReView(String blogId,String docId)
+  async {
+    await FirebaseDatabase.instance
+        .reference()
+        .child("Reviews")
 
+        .child(blogId).child(docId).remove();
+
+
+  }
+
+
+
+  checkIsUserLogin()
+  async{
+    String temp=  await box.get("token") ?? "";
+    if(temp == null || temp == "")
+      isLoginIn=false;
+    else
+      isLoginIn=true;
+
+    update();
+  }
+
+
+
+  shareArticle(String headline)
+  {
+    print("article method called");
+    Share.share("title"+ ":" +" "+headline +" \n" +"App link :" + "abcd link");
+
+  }
 
 }

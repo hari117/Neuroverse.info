@@ -8,7 +8,6 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    print("the value is ${object.chapter_images.isEmpty}");
     // TODO: implement build
     return GetBuilder<BlogDetailsController>(
         init: BlogDetailsController(),
@@ -32,27 +31,18 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.bottomSheet(bottomSheet());
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          height: 250,
-                          width: double.infinity,
-                          color: Colors.green,
-                          alignment: Alignment.center,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                object.title_image,
-                                fit: BoxFit.fitWidth,
-                              )),
-                        ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        height: 200,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              object.title_image,
+                              fit: BoxFit.fitWidth,
+                            )),
                       ),
                     ),
                     SizedBox(
@@ -75,60 +65,83 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                 ),
                                 Column(
                                   children: [
-                                    StreamBuilder(
+                                    controller.isLoginIn?  StreamBuilder(
                                         stream: FirebaseDatabase.instance
                                             .reference()
                                             .child("UserLikesAndDisLikes")
-                                            .child("101917814999370441435")
-                                            .child(object.id).onValue,
-                                        builder: (context,AsyncSnapshot<Event> snap) {
+                                            .child(
+                                            controller.box.get("token") ??
+                                                "")
+                                            .child(object.id)
+                                            .onValue,
+                                        builder: (context,
+                                            AsyncSnapshot<Event> snap) {
                                           if (snap.hasData) {
+                                            final data =
+                                                snap.data!.snapshot.value;
 
-                                            final  data=snap.data!.snapshot.value;
-
-
-                                            return     InkWell(
-
+                                            return InkWell(
                                               child: Image.asset(
                                                 ImagesAndIcons.like,
                                                 scale: 25,
-                                                color: data["like"]==0 ?Colors.black.withOpacity(.7):AppColors.primary_color,
+                                                color: controller.isLoginIn
+                                                    ? Colors.black
+                                                    .withOpacity(.7)
+                                                    : data["like"] == 0
+                                                    ? Colors.black
+                                                    .withOpacity(.7)
+                                                    : AppColors
+                                                    .primary_color,
                                               ),
-                                              onTap: ()async{
-                                               String token= controller.box.get("token") ?? "";
-                                               print("printing token form blog $token");
-                                                if(token.isEmpty)
-                                                  {
-                                                    Get.bottomSheet(bottomSheet());
+                                              onTap: () async {
+                                                String token = controller.box
+                                                    .get("token") ??
+                                                    "";
+                                                print(
+                                                    "printing token form blog $token");
+                                                if (token.isEmpty) {
+                                                  Get.bottomSheet(
+                                                      bottomSheetWidget(
+                                                          context));
 
-                                                    print("condition is correct");
-                                                    //bottomSheet();
-                                                   }
-                                                else
-                                                    {
-                                                      controller.updataData(object.id,"like");
-
-                                                    }
+                                                  print("condition is correct");
+                                                  //bottomSheet();
+                                                } else {
+                                                  controller.updataData(
+                                                      object.id, "like");
+                                                }
                                               },
                                             );
                                           }
-                                          return Text("");
-                                        }),
+                                          return Image.asset(
+                                            ImagesAndIcons.like,
+                                            scale: 25,
+                                            color: Colors.black.withOpacity(.7),
+                                          );
+                                        }) :Image.asset(ImagesAndIcons.like, scale: 25, color: Colors.black.withOpacity(.7),),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     StreamBuilder(
-                                        stream: FirebaseDatabase.instance.reference().child("BlogsCounts").child(object.id).onValue,
-                                        builder: (context,AsyncSnapshot<Event> snap) {
+                                        stream: FirebaseDatabase.instance
+                                            .reference()
+                                            .child("BlogsCounts")
+                                            .child(object.id)
+                                            .onValue,
+                                        builder: (context,
+                                            AsyncSnapshot<Event> snap) {
                                           if (snap.hasData) {
-
-
-                                            print("the object id is ${object.id}");
-                                            final  data=snap.data!.snapshot.value;
+                                            print(
+                                                "the object id is ${object.id}");
+                                            final data =
+                                                snap.data!.snapshot.value;
 
                                             print("the data is ${data}");
-                                            return Text(data["like"].toString(),
+                                            return Text(
+                                              data["like"].toString(),
                                               textScaleFactor: 1,
                                               style: TextStyle(
-                                                  fontWeight:
-                                                  FontWeight.w400,
+                                                  fontWeight: FontWeight.w400,
                                                   fontSize: 14,
                                                   color: Colors.green),
                                             );
@@ -136,63 +149,89 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                           return Text("");
                                         }),
                                   ],
-
                                 ),
                                 SizedBox(
                                   width: 30,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 4.0),
+                                  padding: const EdgeInsets.only(top: 6.0),
                                   child: Column(
                                     children: [
-                                      StreamBuilder(
+                                      controller.isLoginIn?    StreamBuilder(
                                           stream: FirebaseDatabase.instance
-                                      .reference()
-                                      .child("UserLikesAndDisLikes")
-                                      .child("101917814999370441435")
-                                      .child(object.id).onValue,
-                                          builder: (context,AsyncSnapshot<Event> snap) {
+                                              .reference()
+                                              .child("UserLikesAndDisLikes")
+                                              .child(
+                                              controller.box.get("token") ??
+                                                  "")
+                                              .child(object.id)
+                                              .onValue,
+                                          builder: (context,
+                                              AsyncSnapshot<Event> snap) {
                                             if (snap.hasData) {
+                                              final data =
+                                                  snap.data!.snapshot.value;
 
-                                              final  data=snap.data!.snapshot.value;
-
-
-                                              return     InkWell(
-
+                                              return InkWell(
                                                 child: Image.asset(
                                                   ImagesAndIcons.dislike,
                                                   scale: 25,
-                                                  color: data["dislike"]==0 ?Colors.black.withOpacity(.7):AppColors.primary_color,
+                                                  color: controller.isLoginIn
+                                                      ? Colors.black
+                                                      .withOpacity(.7)
+                                                      : data["dislike"] == 0
+                                                      ? Colors.black
+                                                      .withOpacity(.7)
+                                                      : AppColors
+                                                      .primary_color,
                                                 ),
-                                                onTap: (){
-                                                  String token= controller.box.get("token") ?? "";
-                                                  if(token.isEmpty)
-                                                    {
-                                                      Get.bottomSheet(bottomSheet());
-                                                    }else
-                                                      {
-                                                        controller.updataData(object.id,"dislike");
-
-                                                      }
+                                                onTap: () {
+                                                  String token = controller.box
+                                                      .get("token") ??
+                                                      "";
+                                                  if (token.isEmpty) {
+                                                    Get.bottomSheet(
+                                                        bottomSheetWidget(
+                                                            context));
+                                                  } else {
+                                                    controller.updataData(
+                                                        object.id, "dislike");
+                                                  }
                                                 },
                                               );
                                             }
-                                            return Text("");
-                                          }),
-
+                                            return Image.asset(
+                                              ImagesAndIcons.dislike,
+                                              scale: 25,
+                                              color:
+                                              Colors.black.withOpacity(.7),
+                                            );
+                                          }) :Image.asset(
+                                        ImagesAndIcons.dislike,
+                                        scale: 25,
+                                        color:
+                                        Colors.black.withOpacity(.7),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
                                       StreamBuilder(
-                                          stream: FirebaseDatabase.instance.reference().child("BlogsCounts").child(object.id).onValue,
-                                          builder: (context,AsyncSnapshot<Event> snap) {
+                                          stream: FirebaseDatabase.instance
+                                              .reference()
+                                              .child("BlogsCounts")
+                                              .child(object.id)
+                                              .onValue,
+                                          builder: (context,
+                                              AsyncSnapshot<Event> snap) {
                                             if (snap.hasData) {
+                                              final data =
+                                                  snap.data!.snapshot.value;
 
-                                              final  data=snap.data!.snapshot.value;
-
-
-                                              return Text(data["dislike"].toString(),
+                                              return Text(
+                                                data["dislike"].toString(),
                                                 textScaleFactor: 1,
                                                 style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.w400,
+                                                    fontWeight: FontWeight.w400,
                                                     fontSize: 14,
                                                     color: Colors.green),
                                               );
@@ -200,40 +239,47 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                             return Text("");
                                           }),
                                     ],
-
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 30,
+                                  width: 25,
                                 ),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Image.asset(
-                                    ImagesAndIcons.share,
-                                    scale: 170,
-                                    color: Colors.black.withOpacity(.7),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 10.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      controller.shareArticle(object.title);
+                                    },
+                                    child: Image.asset(
+                                      ImagesAndIcons.share,
+                                      scale: 170,
+                                      color: Colors.black.withOpacity(.7),
+                                    ),
                                   ),
                                 )
                               ],
                             ),
                             Container(
-                              height: 40,
+                              height: 35,
                               width: 100,
                               alignment: Alignment.center,
+                              margin: EdgeInsets.only(bottom: 10),
                               child: Text("Donate",
                                   maxLines: 2,
                                   overflow: TextOverflow.clip,
-                                  style: GoogleFonts.ibmPlexSans(
+                                  style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                           fontSize: 14,
-                                          color: AppColors.secondry_color,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.normal,
                                           letterSpacing: 1.2))),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                      color: AppColors.secondry_color,
-                                      width: 1.5)),
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                    color: AppColors.secondry_color,
+                                    width: 1.5),
+                                color: AppColors.secondry_color,
+                              ),
                             )
                             // dontate monemy
                           ],
@@ -249,11 +295,11 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                         object.title,
                         maxLines: 2,
                         overflow: TextOverflow.clip,
-                        style: GoogleFonts.ibmPlexSans(
+                        style: GoogleFonts.poppins(
                           textStyle: TextStyle(
-                              fontSize: 16,
+                              fontSize: 18,
                               color: Colors.black.withOpacity(.8),
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w600,
                               letterSpacing: 1.5),
                         ),
                         textAlign: TextAlign.left,
@@ -269,19 +315,19 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                       itemBuilder: (_, index) {
                         return Text(object.contents[index],
                             overflow: TextOverflow.clip,
-                            style: GoogleFonts.ibmPlexSans(
+                            style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
                                     fontSize: 13,
                                     color: Colors.black.withOpacity(.7),
                                     fontWeight: FontWeight.w500,
-                                    letterSpacing: .8,
+                                    letterSpacing: .9,
                                     height: 1.5)));
                       },
                       itemCount: object.contents.length > 2
                           ? 2
                           : object.contents.length,
                       separatorBuilder: (_, index) {
-                        return Text("\n");
+                        return Text("");
                       },
                     ),
                     SizedBox(
@@ -290,124 +336,194 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                     object.chapter_images.isEmpty
                         ? Container()
                         : ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        height: 250,
+                        width: double.infinity,
+                        //  color: Colors.green,
+                        alignment: Alignment.center,
+                        child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              height: 250,
-                              width: double.infinity,
-                              color: Colors.green,
-                              alignment: Alignment.center,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    object.chapter_images[0],
-                                    fit: BoxFit.fitWidth,
-                                  )),
-                            ),
-                          ),
+                            child: Image.asset(
+                              object.chapter_images[0],
+                              fit: BoxFit.fitWidth,
+                            )),
+                      ),
+                    ),
                     SizedBox(
                       height: 10,
                     ),
                     object.contents.length > 2
                         ? ListView.separated(
-                            padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            itemBuilder: (_, index) {
-                              return Text(object.contents[2 + index],
-                                  overflow: TextOverflow.clip,
-                                  style: GoogleFonts.ibmPlexSans(
-                                      textStyle: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.black.withOpacity(.7),
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: .8,
-                                          height: 1.5)));
-                            },
-                            itemCount: object.contents.length > 2
-                                ? object.contents.length - 2
-                                : object.contents.length,
-                            separatorBuilder: (_, index) {
-                              return Text("\n");
-                            },
-                          )
+                      padding: EdgeInsets.zero,
+                      primary: false,
+                      shrinkWrap: true,
+                      itemBuilder: (_, index) {
+                        return Text(object.contents[2 + index],
+                            overflow: TextOverflow.clip,
+                            style: GoogleFonts.ibmPlexSans(
+                                textStyle: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black.withOpacity(.7),
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: .9,
+                                    height: 1.5)));
+                      },
+                      itemCount: object.contents.length > 2
+                          ? object.contents.length - 2
+                          : object.contents.length,
+                      separatorBuilder: (_, index) {
+                        return Text("\n");
+                      },
+                    )
                         : Container(),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Users Reviews",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black.withOpacity(.8),
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: .85),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
 
-                    Text("Reviews"),
-                    SizedBox(height: 30,),
-                TextField (
-                  controller: controller.reviewController,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: 'Enter Name',
-                      hintText: 'Enter Your Name'
-                  ),
-                  onSubmitted: (value){
+                    controller.isLoading? Container() :    controller.isLoginIn  ?  Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
 
-                    controller.addReview(object.id);
+                        CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              controller.userData["photoUrl"],
 
-                  }
-                  ,
-                ),
+
+                            ),
+                            radius: 20
+                        ),
+                        SizedBox(width: 5,),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: AppColors.neuroverse_Backgroud_Color,width: 2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: EdgeInsets.only(left: 5),
+                            child: TextField(
+
+                              controller: controller.reviewController,
+                              cursorColor: Colors.black,
+                              autofocus: false,
+                              maxLines: 2,
+                              style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+
+                                      letterSpacing: .5)),
+                              decoration: InputDecoration(
+
+                                border: InputBorder.none,
+
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ) : Container(),
+                    SizedBox(height: 8,),
                     StreamBuilder(
                         stream: FirebaseDatabase.instance
                             .reference()
                             .child("Reviews")
-                            .child(object.id).onValue,
-                        builder: (context,AsyncSnapshot<Event> snap) {
+                            .child(object.id)
+                            .onValue,
+                        builder: (context, AsyncSnapshot<Event> snap) {
                           if (snap.hasData) {
+                            final data = snap.data!.snapshot.value;
 
-                            final  data=snap.data!.snapshot.value;
+                            print("the map data is ${data}");
+                            List? dataKeys = [];
+                            if (data == null) {
+                            } else {
+                              dataKeys = data.keys.toList();
+                            }
 
-                              print("the map data is ${data}");
-                            List? dataKeys=[];
-                              if(data==null)
-                                {
-
-                                }else
-                                  {
-                                    dataKeys=data.keys.toList() ;
-                                  }
-
-                         //   print("keys length is  ${dataKeys.length}");
-                         //  return Text("");
-                            return  data==null ? Text("No reviews") : ListView.builder(
+                            //   print("keys length is  ${dataKeys.length}");
+                            //  return Text("");
+                            return data == null
+                                ? Container(
+                                height: 50,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "There is no comments for this blog,write your First comment for this Blog",style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black.withOpacity(.8),
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: .85),
+                                ),
+                                  textAlign: TextAlign.center,
+                                ))
+                                : ListView.builder(
                               primary: false,
                               shrinkWrap: true,
-                                itemBuilder: (_,index){
-                                  
-                                  Map reviewData=data[dataKeys![index]];
-                              return Container(
-                                child:Row(
-                                   mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                  Container(
-
-                                      child: Image.network(reviewData["imageUrl"],),
-                                   width: 100,
-                                    height: 100,
-
-                                  ),
-                                    Column(
+                              itemBuilder: (_, index) {
+                                Map reviewData = data[dataKeys![index]];
+                                return Container(
+                                    child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(reviewData["userName"]),
-                                        Text(reviewData["text"])
+
+                                        CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                              reviewData["imageUrl"]
+
+
+                                          ),
+                                          radius: 20,
+                                        ),
+                                        SizedBox(width: 8,),
+
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(reviewData["userName"]),
+                                                Text(reviewData["Date"]),
+                                              ],
+                                            ),
+                                            Text(reviewData["text"])
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        controller.box.get("token") ==
+                                            reviewData["userId"]
+                                            ? IconButton(
+                                            onPressed: () {
+                                              controller.deleteReView(
+                                                  object.id,
+                                                  reviewData["docId"]);
+                                            },
+                                            icon: Icon(Icons.delete))
+                                            : Container(),
                                       ],
-                                    ),
-                                    SizedBox(width: 20,),
-                                  controller.box.get("token")==reviewData["userId"]? IconButton(onPressed: (){
+                                    ));
+                              },
+                              /*   separatorBuilder (_,index){
 
-                                      controller.deleteReView(object.id,reviewData["docId"]);
 
-                                    }, icon: Icon(Icons.delete)):Container(),
-
-                                  ],
-                                )
-                              );
-                            }, 
-                             /*   separatorBuilder (_,index){
-                             
-                             
                               return Divider(color: Colors.red,);
                                 },*/
                               itemCount: dataKeys?.length,
@@ -415,9 +531,10 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                           }
                           return Text("");
                         }),
-
-
-                ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -425,30 +542,155 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
         });
   }
 
-  Widget bottomSheet() {
+  Widget bottomSheetWidget(context) {
     return Container(
       color: Colors.white,
-      height: 600,
-      child: Column(
-        children: [
-          Text("login to write reviews and gives likes"),
-          SizedBox(
-            height: 50,
-          ),
-          InkWell(
-              onTap: () {
-                controller.loginToGoogle();
-              },
-              child: Text("Google login")),
-          SizedBox(
-            height: 100,
-          ),
-          InkWell(
-              onTap: () {
-                controller.logOutToGoogle();
-              },
-              child: Text("Google login")),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              "Sign in or Sign up in the given options",
+              style: GoogleFonts.palanquin(
+                  textStyle: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  )),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .8,
+              padding: EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                  left: MediaQuery.of(context).size.width * .1),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.neuroverse_Backgroud_Color),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      //  controller.login();
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      child: Image(
+                        image: AssetImage(ImagesAndIcons.google),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Google",
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            // fontWeight: FontWeight.w500,
+                            letterSpacing: 1.0)),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .8,
+              padding: EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                  left: MediaQuery.of(context).size.width * .1),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.neuroverse_Backgroud_Color),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 30,
+                    height: 30,
+                    child: Image(
+                      image: AssetImage(ImagesAndIcons.fb),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "FaceBook",
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            // fontWeight: FontWeight.w500,
+                            letterSpacing: 1.0)),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .8,
+              padding: EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                  left: MediaQuery.of(context).size.width * .1),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.neuroverse_Backgroud_Color),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 30,
+                    height: 30,
+                    child: Image(
+                      image: AssetImage(ImagesAndIcons.twitter),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Twitter",
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            // fontWeight: FontWeight.w500,
+                            letterSpacing: 1.0)),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
