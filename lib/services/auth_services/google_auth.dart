@@ -10,6 +10,7 @@ class GoogleService extends GetxController
 
   late final localDbInstance;
   final settingsController =Get.find<SettingsScreenController>();
+  final blgController =Get.find<BlogDetailsController>();
 
 
   var box;
@@ -83,6 +84,7 @@ class GoogleService extends GetxController
 
     });
     await settingsController.initFun();
+    await blgController.initFun();
 
 
   }
@@ -97,6 +99,7 @@ class GoogleService extends GetxController
 
     });
     _googleSignIn.signInSilently();
+
     update();
   }
 

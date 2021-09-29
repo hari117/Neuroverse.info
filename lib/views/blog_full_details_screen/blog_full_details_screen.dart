@@ -65,60 +65,75 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                 ),
                                 Column(
                                   children: [
-                                    controller.isLoginIn?  StreamBuilder(
-                                        stream: FirebaseDatabase.instance
-                                            .reference()
-                                            .child("UserLikesAndDisLikes")
-                                            .child(
-                                            controller.box.get("token") ??
-                                                "")
-                                            .child(object.id)
-                                            .onValue,
-                                        builder: (context,
-                                            AsyncSnapshot<Event> snap) {
-                                          if (snap.hasData) {
-                                            final data =
-                                                snap.data!.snapshot.value;
+                                    controller.isLoginIn
+                                        ? StreamBuilder(
+                                            stream: FirebaseDatabase.instance
+                                                .reference()
+                                                .child("UserLikesAndDisLikes")
+                                                .child(controller.box
+                                                        .get("token") ??
+                                                    "")
+                                                .child(object.id)
+                                                .onValue,
+                                            builder: (context,
+                                                AsyncSnapshot<Event> snap) {
+                                              if (snap.hasData) {
+                                                final data =
+                                                    snap.data!.snapshot.value;
 
-                                            return InkWell(
-                                              child: Image.asset(
+                                                return InkWell(
+                                                  child: Image.asset(
+                                                    ImagesAndIcons.like,
+                                                    scale: 25,
+                                                    color: controller.isLoginIn
+                                                        ? Colors.black
+                                                            .withOpacity(.7)
+                                                        : data["like"] == 0
+                                                            ? Colors.black
+                                                                .withOpacity(.7)
+                                                            : AppColors
+                                                                .primary_color,
+                                                  ),
+                                                  onTap: () async {
+                                                    String token = controller
+                                                            .box
+                                                            .get("token") ??
+                                                        "";
+                                                    print(
+                                                        "printing token form blog $token");
+                                                    if (token.isEmpty) {
+                                                      Get.bottomSheet(
+                                                          bottomSheetWidget(
+                                                              context));
+
+                                                      print(
+                                                          "condition is correct");
+                                                      //bottomSheet();
+                                                    } else {
+                                                      controller.updataData(
+                                                          object.id, "like");
+                                                    }
+                                                  },
+                                                );
+                                              }
+                                              return Image.asset(
                                                 ImagesAndIcons.like,
                                                 scale: 25,
-                                                color: controller.isLoginIn
-                                                    ? Colors.black
-                                                    .withOpacity(.7)
-                                                    : data["like"] == 0
-                                                    ? Colors.black
-                                                    .withOpacity(.7)
-                                                    : AppColors
-                                                    .primary_color,
-                                              ),
-                                              onTap: () async {
-                                                String token = controller.box
-                                                    .get("token") ??
-                                                    "";
-                                                print(
-                                                    "printing token form blog $token");
-                                                if (token.isEmpty) {
-                                                  Get.bottomSheet(
-                                                      bottomSheetWidget(
-                                                          context));
-
-                                                  print("condition is correct");
-                                                  //bottomSheet();
-                                                } else {
-                                                  controller.updataData(
-                                                      object.id, "like");
-                                                }
-                                              },
-                                            );
-                                          }
-                                          return Image.asset(
-                                            ImagesAndIcons.like,
-                                            scale: 25,
-                                            color: Colors.black.withOpacity(.7),
-                                          );
-                                        }) :Image.asset(ImagesAndIcons.like, scale: 25, color: Colors.black.withOpacity(.7),),
+                                                color: Colors.black
+                                                    .withOpacity(.7),
+                                              );
+                                            })
+                                        : InkWell(
+                                            onTap: () {
+                                              Get.bottomSheet(
+                                                  bottomSheetWidget(context));
+                                            },
+                                            child: Image.asset(
+                                              ImagesAndIcons.like,
+                                              scale: 25,
+                                              color:
+                                                  Colors.black.withOpacity(.7),
+                                            )),
                                     SizedBox(
                                       height: 5,
                                     ),
@@ -157,61 +172,73 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                   padding: const EdgeInsets.only(top: 6.0),
                                   child: Column(
                                     children: [
-                                      controller.isLoginIn?    StreamBuilder(
-                                          stream: FirebaseDatabase.instance
-                                              .reference()
-                                              .child("UserLikesAndDisLikes")
-                                              .child(
-                                              controller.box.get("token") ??
-                                                  "")
-                                              .child(object.id)
-                                              .onValue,
-                                          builder: (context,
-                                              AsyncSnapshot<Event> snap) {
-                                            if (snap.hasData) {
-                                              final data =
-                                                  snap.data!.snapshot.value;
+                                      controller.isLoginIn
+                                          ? StreamBuilder(
+                                              stream: FirebaseDatabase.instance
+                                                  .reference()
+                                                  .child("UserLikesAndDisLikes")
+                                                  .child(controller.box
+                                                          .get("token") ??
+                                                      "")
+                                                  .child(object.id)
+                                                  .onValue,
+                                              builder: (context,
+                                                  AsyncSnapshot<Event> snap) {
+                                                if (snap.hasData) {
+                                                  final data =
+                                                      snap.data!.snapshot.value;
 
-                                              return InkWell(
-                                                child: Image.asset(
+                                                  return InkWell(
+                                                    child: Image.asset(
+                                                      ImagesAndIcons.dislike,
+                                                      scale: 25,
+                                                      color: controller
+                                                              .isLoginIn
+                                                          ? Colors.black
+                                                              .withOpacity(.7)
+                                                          : data["dislike"] == 0
+                                                              ? Colors.black
+                                                                  .withOpacity(
+                                                                      .7)
+                                                              : AppColors
+                                                                  .primary_color,
+                                                    ),
+                                                    onTap: () {
+                                                      String token = controller
+                                                              .box
+                                                              .get("token") ??
+                                                          "";
+                                                      if (token.isEmpty) {
+                                                        Get.bottomSheet(
+                                                            bottomSheetWidget(
+                                                                context));
+                                                      } else {
+                                                        controller.updataData(
+                                                            object.id,
+                                                            "dislike");
+                                                      }
+                                                    },
+                                                  );
+                                                }
+                                                return Image.asset(
                                                   ImagesAndIcons.dislike,
                                                   scale: 25,
-                                                  color: controller.isLoginIn
-                                                      ? Colors.black
-                                                      .withOpacity(.7)
-                                                      : data["dislike"] == 0
-                                                      ? Colors.black
-                                                      .withOpacity(.7)
-                                                      : AppColors
-                                                      .primary_color,
-                                                ),
-                                                onTap: () {
-                                                  String token = controller.box
-                                                      .get("token") ??
-                                                      "";
-                                                  if (token.isEmpty) {
-                                                    Get.bottomSheet(
-                                                        bottomSheetWidget(
-                                                            context));
-                                                  } else {
-                                                    controller.updataData(
-                                                        object.id, "dislike");
-                                                  }
-                                                },
-                                              );
-                                            }
-                                            return Image.asset(
-                                              ImagesAndIcons.dislike,
-                                              scale: 25,
-                                              color:
-                                              Colors.black.withOpacity(.7),
-                                            );
-                                          }) :Image.asset(
-                                        ImagesAndIcons.dislike,
-                                        scale: 25,
-                                        color:
-                                        Colors.black.withOpacity(.7),
-                                      ),
+                                                  color: Colors.black
+                                                      .withOpacity(.7),
+                                                );
+                                              })
+                                          : InkWell(
+                                              onTap: () {
+                                                Get.bottomSheet(
+                                                    bottomSheetWidget(context));
+                                              },
+                                              child: Image.asset(
+                                                ImagesAndIcons.dislike,
+                                                scale: 25,
+                                                color: Colors.black
+                                                    .withOpacity(.7),
+                                              ),
+                                            ),
                                       SizedBox(
                                         height: 5,
                                       ),
@@ -336,46 +363,46 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                     object.chapter_images.isEmpty
                         ? Container()
                         : ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        height: 250,
-                        width: double.infinity,
-                        //  color: Colors.green,
-                        alignment: Alignment.center,
-                        child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              object.chapter_images[0],
-                              fit: BoxFit.fitWidth,
-                            )),
-                      ),
-                    ),
+                            child: Container(
+                              height: 250,
+                              width: double.infinity,
+                              //  color: Colors.green,
+                              alignment: Alignment.center,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(
+                                    object.chapter_images[0],
+                                    fit: BoxFit.fitWidth,
+                                  )),
+                            ),
+                          ),
                     SizedBox(
                       height: 10,
                     ),
                     object.contents.length > 2
                         ? ListView.separated(
-                      padding: EdgeInsets.zero,
-                      primary: false,
-                      shrinkWrap: true,
-                      itemBuilder: (_, index) {
-                        return Text(object.contents[2 + index],
-                            overflow: TextOverflow.clip,
-                            style: GoogleFonts.ibmPlexSans(
-                                textStyle: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black.withOpacity(.7),
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: .9,
-                                    height: 1.5)));
-                      },
-                      itemCount: object.contents.length > 2
-                          ? object.contents.length - 2
-                          : object.contents.length,
-                      separatorBuilder: (_, index) {
-                        return Text("\n");
-                      },
-                    )
+                            padding: EdgeInsets.zero,
+                            primary: false,
+                            shrinkWrap: true,
+                            itemBuilder: (_, index) {
+                              return Text(object.contents[2 + index],
+                                  overflow: TextOverflow.clip,
+                                  style: GoogleFonts.ibmPlexSans(
+                                      textStyle: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black.withOpacity(.7),
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: .9,
+                                          height: 1.5)));
+                            },
+                            itemCount: object.contents.length > 2
+                                ? object.contents.length - 2
+                                : object.contents.length,
+                            separatorBuilder: (_, index) {
+                              return Text("\n");
+                            },
+                          )
                         : Container(),
                     SizedBox(
                       height: 15,
@@ -393,51 +420,56 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                     SizedBox(
                       height: 15,
                     ),
-
-                    controller.isLoading? Container() :    controller.isLoginIn  ?  Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-
-                        CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              controller.userData["photoUrl"],
-
-
-                            ),
-                            radius: 20
-                        ),
-                        SizedBox(width: 5,),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: AppColors.neuroverse_Backgroud_Color,width: 2),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            padding: EdgeInsets.only(left: 5),
-                            child: TextField(
-
-                              controller: controller.reviewController,
-                              cursorColor: Colors.black,
-                              autofocus: false,
-                              maxLines: 2,
-                              style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
-
-                                      letterSpacing: .5)),
-                              decoration: InputDecoration(
-
-                                border: InputBorder.none,
-
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ) : Container(),
-                    SizedBox(height: 8,),
+                    controller.isLoading
+                        ? Container()
+                        : controller.isLoginIn
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        controller.userData["photoUrl"],
+                                      ),
+                                      radius: 20),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(
+                                            color: AppColors
+                                                .neuroverse_Backgroud_Color,
+                                            width: 2),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      padding: EdgeInsets.only(left: 5),
+                                      child: TextField(
+                                        controller: controller.reviewController,
+                                        cursorColor: Colors.black,
+                                        autofocus: false,
+                                        maxLines: 2,
+                                        style: GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                                letterSpacing: .5)),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                        ),
+                                        onSubmitted: (value) {
+                                          controller.addReview(object.id);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Container(),
+                    SizedBox(
+                      height: 8,
+                    ),
                     StreamBuilder(
                         stream: FirebaseDatabase.instance
                             .reference()
@@ -459,75 +491,121 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                             //  return Text("");
                             return data == null
                                 ? Container(
-                                height: 50,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "There is no comments for this blog,write your First comment for this Blog",style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.black.withOpacity(.8),
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: .85),
-                                ),
-                                  textAlign: TextAlign.center,
-                                ))
+                                    height: 50,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "There is no comments for this blog,write your First comment for this Blog",
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black.withOpacity(.8),
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: .85),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ))
                                 : ListView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              itemBuilder: (_, index) {
-                                Map reviewData = data[dataKeys![index]];
-                                return Container(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemBuilder: (_, index) {
+                                      Map reviewData = data[dataKeys![index]];
+                                      return Container(
+                                          margin: EdgeInsets.only(bottom: 13),
+                                          padding: EdgeInsets.only(bottom: 13),
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.black
+                                                          .withOpacity(.1),
+                                                      width: .5))),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    backgroundImage: NetworkImage(
+                                                        reviewData["imageUrl"]),
+                                                    radius: 20,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            reviewData["userName"],
+                                                            style:
+                                                            GoogleFonts.poppins(
+                                                              textStyle: TextStyle(
+                                                                  fontSize: 13,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                      .8),
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                                  letterSpacing:
+                                                                  .85),
+                                                            ),
+                                                          ),
+                                                          //Text(reviewData["Date"]),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 3,
+                                                      ),
+                                                      Text(reviewData["text"], style:
+                                                      GoogleFonts.poppins(
+                                                        textStyle: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors
+                                                              .black
+                                                              .withOpacity(
+                                                              .7),
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w400,
+                                                        ),
+                                                      ),)
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                ],
+                                              ),
 
-                                        CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                              reviewData["imageUrl"]
-
-
-                                          ),
-                                          radius: 20,
-                                        ),
-                                        SizedBox(width: 8,),
-
-                                        Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(reviewData["userName"]),
-                                                Text(reviewData["Date"]),
-                                              ],
-                                            ),
-                                            Text(reviewData["text"])
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        controller.box.get("token") ==
-                                            reviewData["userId"]
-                                            ? IconButton(
-                                            onPressed: () {
-                                              controller.deleteReView(
-                                                  object.id,
-                                                  reviewData["docId"]);
-                                            },
-                                            icon: Icon(Icons.delete))
-                                            : Container(),
-                                      ],
-                                    ));
-                              },
-                              /*   separatorBuilder (_,index){
+                                              controller.box.get("token") ==
+                                                      reviewData["userId"]
+                                                  ? IconButton(
+                                                      onPressed: () {
+                                                        controller.deleteReView(
+                                                            object.id,
+                                                            reviewData[
+                                                                "docId"]);
+                                                      },
+                                                      icon: Icon(Icons.delete))
+                                                  : Container(),
+                                            ],
+                                          ));
+                                    },
+                                    /*   separatorBuilder (_,index){
 
 
                               return Divider(color: Colors.red,);
                                 },*/
-                              itemCount: dataKeys?.length,
-                            );
+                                    itemCount: dataKeys?.length,
+                                  );
                           }
                           return Text("");
                         }),
@@ -558,10 +636,10 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
               "Sign in or Sign up in the given options",
               style: GoogleFonts.palanquin(
                   textStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  )),
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              )),
             ),
             SizedBox(
               height: 15,
@@ -582,8 +660,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                 children: [
                   InkWell(
                     onTap: () {
-                      //  controller.login();
-                      Get.back();
+                      controller.loginToGoogle();
                     },
                     child: Container(
                       width: 30,

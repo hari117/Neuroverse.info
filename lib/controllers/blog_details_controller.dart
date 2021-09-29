@@ -21,6 +21,7 @@ class BlogDetailsController extends GetxController {
 
   @override
   void onInit() async{
+    print("blog detials init called");
     isLoading=true;
     await checkIsUserLogin();
     googleInstance = Get.find<GoogleService>();
@@ -48,15 +49,46 @@ class BlogDetailsController extends GetxController {
 
   }
 
-  @override
-  void onReady() {
-    print("on ready funtion called");
-  }
+ initFun()
+ async{
+   print("blog detials init called");
+   isLoading=true;
+   await checkIsUserLogin();
+   googleInstance = Get.find<GoogleService>();
+   firebaseInstance = Get.find<FirebaseService>();
+   googleInstance.googleStream();
+   print("user login or not ? $isLoginIn");
+   if(isLoginIn)
+   {
+     DataSnapshot blodData =await FirebaseDatabase.instance
+         .reference()
+         .child("UserInformation")
+         .child(box.get("token"))
+         .once();
+
+     userData=blodData!.value;
+     print("the user data is ${userData}");
+   }else
+   {
+     print("no user login");
+   }
+   isLoading=false;
+   update();
+
+
+ }
+
 
   loginToGoogle() {
     googleInstance.googleLogin();
+    initFun();
+    update();
     Get.back();
+
+
   }
+
+
 
   logOutToGoogle() => googleInstance.googleSignOut();
 
@@ -240,6 +272,8 @@ class BlogDetailsController extends GetxController {
 
   deleteReView(String blogId,String docId)
   async {
+
+
     await FirebaseDatabase.instance
         .reference()
         .child("Reviews")
