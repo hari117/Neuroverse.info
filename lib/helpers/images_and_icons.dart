@@ -54,7 +54,7 @@ class ImagesAndIcons
   static  String chapter_09_01="assets/images/09_1.png";
   static  String chapter_09_02="assets/images/09_2.png";
 
-  static  String chapter_010_01="assets/images/010_1.png";
+  static  String chapter_010_01="assets/images/010_1.jpg";
 
   static  String support="assets/images/support.jpeg";
 

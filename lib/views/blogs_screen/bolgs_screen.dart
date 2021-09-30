@@ -126,17 +126,19 @@ class BlogsScreen extends GetView<BlogsScreenController> {
 
   Widget blog_card(Chapter object) {
     return Container(
+      alignment: Alignment.topCenter,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
+       border: Border.all(color: Colors.black.withOpacity(.3),width: .2)
        // color: Colors.blue,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(.1),
-            blurRadius: 2,
-            offset: Offset(1, 1),
-            spreadRadius: 1,
-          ),
-        ],
+       //  boxShadow: [
+       //    BoxShadow(
+       //      color: Colors.black.withOpacity(.1),
+       //      blurRadius: 2,
+       //      offset: Offset(1, 1),
+       //      spreadRadius: 1,
+       //    ),
+       //  ],
       ),
       child: InkWell(
         onTap: () {
@@ -147,15 +149,18 @@ class BlogsScreen extends GetView<BlogsScreenController> {
           height: 195,
           //width: double.infinity,
 
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.topCenter,
           child: Stack(
 
             children: [
-              Container(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  object.title_image,
-                  fit: BoxFit.cover,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    object.title_image,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
               Align(
@@ -168,7 +173,7 @@ class BlogsScreen extends GetView<BlogsScreenController> {
                   width: double.infinity,
 
                   decoration: BoxDecoration(
-
+                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10) ),
                     gradient: LinearGradient(
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
