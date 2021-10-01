@@ -1,4 +1,5 @@
 import 'package:neuroverse/helpers/imports_and_exports.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class SettingsScreenController extends GetxController
 {
@@ -111,6 +112,21 @@ class SettingsScreenController extends GetxController
 
 
   }
+
+
+
+//   faceBookLogin()
+//   async{
+//     final LoginResult result = await FacebookAuth.instance.login(); // by default we request the email and the public profile
+// // or FacebookAuth.i.login()
+//     if (result.status == LoginStatus.success) {
+//       // you are logged
+//       final AccessToken accessToken = result.accessToken!;
+//     } else {
+//       print(result.status);
+//       print(result.message);
+//     }
+//   }
 
 
   @override
