@@ -287,7 +287,7 @@ class BlogDetailsController extends GetxController {
 
   checkIsUserLogin()
   async{
-    String temp=  await box.get("token") ?? "";
+    String temp= (await box.get("token")  ?? "").toString();
     if(temp == null || temp == "")
       isLoginIn=false;
     else

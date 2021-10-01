@@ -31,6 +31,8 @@ class ImagesAndIcons
 
   static final String twitter="assets/icons/twitter.png";
 
+  static final String app_version="assets/icons/app_version.png";
+
   // images
 
   static  String chapter_03_01="assets/images/03_1.jpeg";

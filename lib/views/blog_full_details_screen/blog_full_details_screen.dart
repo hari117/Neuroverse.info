@@ -480,7 +480,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                           if (snap.hasData) {
                             final data = snap.data!.snapshot.value;
 
-                            print("the map data is ${data}");
+
                             List? dataKeys = [];
                             if (data == null) {
                             } else {

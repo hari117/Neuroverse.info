@@ -9,7 +9,7 @@ class SettingsScreenController extends GetxController
   late final Box box= Hive.box(Keywords.app_Name);
 
   String url="https://www.neuroverse.info/";
-
+ String privacy_policy="https://www.termsfeed.com/live/396aee4f-fa78-4dc5-bcb0-2a67a5257644";
 
   bool isLoading =false;
 
@@ -17,10 +17,15 @@ class SettingsScreenController extends GetxController
 
   late GoogleService google=Get.find<GoogleService>();
   late TwitterAuthService twitter=Get.find<TwitterAuthService>();
+ late PackageInfo packageInfo;
+ String appVersion="";
 
   @override
   Future<void> onInit() async {
     print("calling oninit funtion again");
+    packageInfo=  await PackageInfo.fromPlatform();
+    appVersion = packageInfo.version;
+
     // google=Get.find<GoogleService>();
     isLoading=true;
 
@@ -37,7 +42,10 @@ class SettingsScreenController extends GetxController
 
       userData=blodData!.value;
 
-    }
+    }else
+      {
+        print("user is not login");
+      }
 
 
     isLoading=false;
@@ -46,8 +54,10 @@ class SettingsScreenController extends GetxController
 
   checkUserIsLoginOrNot()
   async{
-    String tocken=await (box.get("token")).toString() ?? "";
-    return tocken=="" || tocken==null ?false : true;
+    dynamic tocken=(await box.get("token")  ?? "").toString();
+
+    print ("the token is $tocken");
+    return tocken=="" || tocken==null ? false : true;
   }
 
   initFun()async{
@@ -62,7 +72,7 @@ class SettingsScreenController extends GetxController
       DataSnapshot blodData =await FirebaseDatabase.instance
           .reference()
           .child("UserInformation")
-          .child(box.get("token"))
+          .child((await box.get("token")  ?? "").toString())
 
           .once();
 
@@ -84,16 +94,14 @@ class SettingsScreenController extends GetxController
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
+    openPrivacyPolicyWebsite()
+    async{
+
+      await canLaunch(privacy_policy) ? await launch(privacy_policy) : throw 'Could not launch $privacy_policy';
+    }
 
 
 
-  logout()
-  async{
-    await google.googleSignOut();
-    await box.clear();
-    await initFun();
-    update();
-  }
 
   login()
   async{
@@ -103,15 +111,53 @@ class SettingsScreenController extends GetxController
   }
 
 
-
   twitterLogin()
  async {
-
-   await twitter.loginTwitter();
    Get.back();
+   await twitter.loginTwitter();
+
+   await initFun();
+   update();
 
 
   }
+
+
+  logout()
+  async{
+   String name = await  box.get("login_method");
+   switch (name)
+   {
+     case "google":
+       googleLogOut();
+       break;
+     case "twitter":
+       twitterLogout();
+       break;
+   }
+
+  }
+
+
+
+
+  googleLogOut()
+  async{
+    await google.googleSignOut();
+    await box.clear();
+    await initFun();
+    update();
+  }
+
+  twitterLogout()
+  async{
+    await twitter.logoutTwitter();
+    await box.clear();
+    await initFun();
+    update();
+  }
+
+
 
 
 

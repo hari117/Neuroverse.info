@@ -43,6 +43,7 @@ class TwitterAuthService extends GetxController
         "photoUrl":result!.user!.thumbnailImage,
       };
       await  Hive.box(Keywords.app_Name)..put("token",result!.user!.id);
+      await  Hive.box(Keywords.app_Name)..put("login_method","twitter");
       await FirebaseDatabase.instance.reference().child(Keywords.UserInfoDb).child(result!.user!.id.toString()).set(model);
 
 
