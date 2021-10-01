@@ -15,6 +15,7 @@ class SettingsScreenController extends GetxController
   bool isLogin=false;
 
   late GoogleService google=Get.find<GoogleService>();
+  late TwitterAuthService twitter=Get.find<TwitterAuthService>();
 
   @override
   Future<void> onInit() async {
@@ -29,7 +30,7 @@ class SettingsScreenController extends GetxController
       DataSnapshot blodData =await FirebaseDatabase.instance
           .reference()
           .child("UserInformation")
-          .child(box.get("token"))
+          .child((box.get("token")).toString())
 
           .once();
 
@@ -44,7 +45,7 @@ class SettingsScreenController extends GetxController
 
   checkUserIsLoginOrNot()
   async{
-    String tocken=await box.get("token") ?? "";
+    String tocken=await (box.get("token")).toString() ?? "";
     return tocken=="" || tocken==null ?false : true;
   }
 
@@ -99,6 +100,18 @@ class SettingsScreenController extends GetxController
     await initFun();
     update();
   }
+
+
+
+  twitterLogin()
+ async {
+
+   await twitter.loginTwitter();
+   Get.back();
+
+
+  }
+
 
   @override
   void onClose() {

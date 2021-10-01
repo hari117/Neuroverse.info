@@ -58,7 +58,7 @@ class ImagesAndIcons
 
   static  String support="assets/images/support.jpeg";
 
-  static  String app_logo="assets/images/app_logo.jpeg";
+  static  String app_logo="assets/images/app_logo.png";
 
   static  String quiz_image="assets/images/quiz_image.png";
 

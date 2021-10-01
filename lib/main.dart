@@ -7,11 +7,11 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+
   Directory appDocDir = await path.getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
   Hive.init(appDocPath);
   await Hive.openBox(Keywords.app_Name);
-
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialBinding: initControllers(),
+  initialBinding: initControllers(),
       theme: ThemeData(
         // is not restarted.
         primarySwatch: Colors.blue,

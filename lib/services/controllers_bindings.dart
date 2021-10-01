@@ -19,6 +19,8 @@ initControllers(){
   Get.lazyPut<EditProfileController>(() => EditProfileController());
   Get.put(GoogleService());
   Get.put(FirebaseService());
+  Get.put(TwitterAuthService());
+
   // Get.lazyPut<GoogleService>(() => GoogleService());
   //
   //     Get.lazyPut<FirebaseService>(() => FirebaseService());
