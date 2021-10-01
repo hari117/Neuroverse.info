@@ -12,14 +12,26 @@ class BlogsScreen extends GetView<BlogsScreenController> {
                 centerTitle: false,
                 automaticallyImplyLeading: false,
                 elevation: 0,
-                title: Text(
-                  Keywords.app_Name,
-                  style: GoogleFonts.palanquin(
-                      textStyle: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 1.5)),
+                title: Row(
+                  children: [
+
+                    Container(
+                      width: 30,
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Image(image: AssetImage(ImagesAndIcons.app_logo),),
+                    ),
+                    SizedBox(width: 7,),
+                    Text(
+                      Keywords.app_Name,
+                      style: GoogleFonts.palanquin(
+                          textStyle: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.5)),
+                    ),
+                  ],
                 ),
               ),
               body: Padding(
