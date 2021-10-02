@@ -75,7 +75,10 @@ class GoogleService extends GetxController
               "like":0,
               "dislike":0
             },
-
+            "c11_blog":{
+              "like":0,
+              "dislike":0
+            },
           }
 
 
