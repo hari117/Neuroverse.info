@@ -34,3 +34,7 @@ export 'package:neuroverse/controllers/edit_profile_controller.dart';
 export 'package:neuroverse/views/edit_profile/edit_profile_screen.dart';
 export 'package:image_picker/image_picker.dart';
 export 'package:firebase_storage/firebase_storage.dart';
+export 'package:twitter_login/twitter_login.dart';
+export 'package:neuroverse/services/auth_services/twitter_auth.dart';
+export 'package:package_info/package_info.dart';
+export 'package:neuroverse/views/privacy_policy/privacy_policy_screen.dart';

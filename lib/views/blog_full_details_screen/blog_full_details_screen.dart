@@ -70,9 +70,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                             stream: FirebaseDatabase.instance
                                                 .reference()
                                                 .child("UserLikesAndDisLikes")
-                                                .child(controller.box
-                                                        .get("token") ??
-                                                    "")
+                                                .child((controller.box.get("token")).toString())
                                                 .child(object.id)
                                                 .onValue,
                                             builder: (context,
@@ -85,34 +83,16 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                                   child: Image.asset(
                                                     ImagesAndIcons.like,
                                                     scale: 25,
-                                                    color: controller.isLoginIn
+                                                    color:data["like"] == 0
                                                         ? Colors.black
-                                                            .withOpacity(.7)
-                                                        : data["like"] == 0
-                                                            ? Colors.black
-                                                                .withOpacity(.7)
-                                                            : AppColors
-                                                                .primary_color,
+                                                        .withOpacity(.7)
+                                                        : AppColors
+                                                        .primary_color,
                                                   ),
                                                   onTap: () async {
-                                                    String token = controller
-                                                            .box
-                                                            .get("token") ??
-                                                        "";
-                                                    print(
-                                                        "printing token form blog $token");
-                                                    if (token.isEmpty) {
-                                                      Get.bottomSheet(
-                                                          bottomSheetWidget(
-                                                              context));
-
-                                                      print(
-                                                          "condition is correct");
-                                                      //bottomSheet();
-                                                    } else {
-                                                      controller.updataData(
-                                                          object.id, "like");
-                                                    }
+                                                 
+                                                    controller.updataData(
+                                                        object.id, "like");
                                                   },
                                                 );
                                               }
@@ -158,7 +138,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 14,
-                                                  color: Colors.green),
+                                                  color: Colors.black.withOpacity(.3)),
                                             );
                                           }
                                           return Text("");
@@ -177,9 +157,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                               stream: FirebaseDatabase.instance
                                                   .reference()
                                                   .child("UserLikesAndDisLikes")
-                                                  .child(controller.box
-                                                          .get("token") ??
-                                                      "")
+                                                  .child(controller.box.get("token").toString())
                                                   .child(object.id)
                                                   .onValue,
                                               builder: (context,
@@ -192,16 +170,12 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                                     child: Image.asset(
                                                       ImagesAndIcons.dislike,
                                                       scale: 25,
-                                                      color: controller
-                                                              .isLoginIn
+                                                      color: data["dislike"] == 0
                                                           ? Colors.black
-                                                              .withOpacity(.7)
-                                                          : data["dislike"] == 0
-                                                              ? Colors.black
-                                                                  .withOpacity(
-                                                                      .7)
-                                                              : AppColors
-                                                                  .primary_color,
+                                                          .withOpacity(
+                                                          .7)
+                                                          : AppColors
+                                                          .primary_color,
                                                     ),
                                                     onTap: () {
                                                       String token = controller
@@ -260,7 +234,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 14,
-                                                    color: Colors.green),
+                                                    color: Colors.black.withOpacity(.3)),
                                               );
                                             }
                                             return Text("");
@@ -449,7 +423,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                         controller: controller.reviewController,
                                         cursorColor: Colors.black,
                                         autofocus: false,
-                                        maxLines: 2,
+                                        maxLength: 50,
                                         style: GoogleFonts.poppins(
                                             textStyle: TextStyle(
                                                 fontSize: 16,
@@ -459,6 +433,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                           border: InputBorder.none,
                                         ),
                                         onSubmitted: (value) {
+                                          print("onsubmiited fun was called");
                                           controller.addReview(object.id);
                                         },
                                       ),
@@ -480,7 +455,7 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                           if (snap.hasData) {
                             final data = snap.data!.snapshot.value;
 
-                            print("the map data is ${data}");
+
                             List? dataKeys = [];
                             if (data == null) {
                             } else {
@@ -685,82 +660,87 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                 ],
               ),
             ),
+            // SizedBox(
+            //   height: 15,
+            // ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width * .8,
+            //   padding: EdgeInsets.only(
+            //       top: 10,
+            //       bottom: 10,
+            //       left: MediaQuery.of(context).size.width * .1),
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10),
+            //       color: AppColors.neuroverse_Backgroud_Color),
+            //   alignment: Alignment.center,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       Container(
+            //         width: 30,
+            //         height: 30,
+            //         child: Image(
+            //           image: AssetImage(ImagesAndIcons.fb),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Text(
+            //         "FaceBook",
+            //         style: GoogleFonts.poppins(
+            //             textStyle: TextStyle(
+            //                 fontSize: 15,
+            //                 color: Colors.black,
+            //                 // fontWeight: FontWeight.w500,
+            //                 letterSpacing: 1.0)),
+            //       )
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 15,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * .8,
-              padding: EdgeInsets.only(
-                  top: 10,
-                  bottom: 10,
-                  left: MediaQuery.of(context).size.width * .1),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.neuroverse_Backgroud_Color),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    child: Image(
-                      image: AssetImage(ImagesAndIcons.fb),
+            InkWell(
+              onTap: (){
+                controller.loginToTwitter();
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width * .8,
+                padding: EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                    left: MediaQuery.of(context).size.width * .1),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.neuroverse_Backgroud_Color),
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      child: Image(
+                        image: AssetImage(ImagesAndIcons.twitter),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "FaceBook",
-                    style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            // fontWeight: FontWeight.w500,
-                            letterSpacing: 1.0)),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * .8,
-              padding: EdgeInsets.only(
-                  top: 10,
-                  bottom: 10,
-                  left: MediaQuery.of(context).size.width * .1),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.neuroverse_Backgroud_Color),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    child: Image(
-                      image: AssetImage(ImagesAndIcons.twitter),
+                    SizedBox(
+                      width: 10,
                     ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Twitter",
-                    style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            // fontWeight: FontWeight.w500,
-                            letterSpacing: 1.0)),
-                  )
-                ],
+                    Text(
+                      "Twitter",
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              // fontWeight: FontWeight.w500,
+                              letterSpacing: 1.0)),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(

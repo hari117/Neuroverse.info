@@ -50,6 +50,8 @@ dev_dependencies:
   image_picker :
   firebase_storage :
   share :
+  twitter_login :
+  package_info :
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -6,7 +6,7 @@ import 'package:neuroverse/helpers/imports_and_exports.dart';
 
 class BlogDetailsController extends GetxController {
   late GoogleService googleInstance;
-
+  late TwitterAuthService twitterInstance;
   late FirebaseService firebaseInstance;
   late final Box box=Hive.box(Keywords.app_Name);
 
@@ -26,6 +26,7 @@ class BlogDetailsController extends GetxController {
     await checkIsUserLogin();
     googleInstance = Get.find<GoogleService>();
     firebaseInstance = Get.find<FirebaseService>();
+    twitterInstance=Get.find<TwitterAuthService>();
     googleInstance.googleStream();
     print("user login or not ? $isLoginIn");
     if(isLoginIn)
@@ -63,7 +64,7 @@ class BlogDetailsController extends GetxController {
      DataSnapshot blodData =await FirebaseDatabase.instance
          .reference()
          .child("UserInformation")
-         .child(box.get("token"))
+         .child(box.get("token").toString())
          .once();
 
      userData=blodData!.value;
@@ -79,25 +80,14 @@ class BlogDetailsController extends GetxController {
  }
 
 
-  loginToGoogle() {
-    googleInstance.googleLogin();
-    initFun();
-    update();
-    Get.back();
 
-
-  }
-
-
-
-  logOutToGoogle() => googleInstance.googleSignOut();
 
   updataData(String blogId, String type) async{
 
     DataSnapshot blodData =await FirebaseDatabase.instance
         .reference()
         .child("UserLikesAndDisLikes")
-        .child(box.get("token"))
+        .child(box.get("token").toString())
         .child(blogId)
         .once();
 
@@ -166,7 +156,7 @@ class BlogDetailsController extends GetxController {
       await FirebaseDatabase.instance
           .reference()
           .child("UserLikesAndDisLikes")
-          .child(box.get("token"))
+          .child(box.get("token").toString())
           .child(blogId)
           .update(tempMap);
 
@@ -224,7 +214,7 @@ class BlogDetailsController extends GetxController {
       await FirebaseDatabase.instance
           .reference()
           .child("UserLikesAndDisLikes")
-          .child(box.get("token"))
+          .child(box.get("token").toString())
           .child(blogId)
           .update(tempMap);
     }
@@ -246,25 +236,26 @@ class BlogDetailsController extends GetxController {
     DataSnapshot blodData =await FirebaseDatabase.instance
         .reference()
         .child("UserInformation")
-        .child(box.get("token"))
+        .child(box.get("token").toString())
         .once();
 
     Map<dynamic,dynamic> userData=blodData!.value;
 
 
     Random random=Random();
+    String docId=random.nextInt(15).toString();
     await FirebaseDatabase.instance
         .reference()
         .child("Reviews")
 
-        .child(blogId).child(random.nextInt(15).toString())
+        .child(blogId).child(docId)
         .set({
       "text":reviewController.text,
       "userId":box.get("token"),
       "Date":"${DateFormat.yMd().add_jm().format(DateTime.now())}",
       "imageUrl":userData["photoUrl"],
       "userName":userData["displayName"],
-      "docId":random.nextInt(15).toString()
+      "docId":docId
     });
     reviewController.clear();
   }
@@ -274,26 +265,14 @@ class BlogDetailsController extends GetxController {
   async {
 
 
+     print("the doc id is ${docId}");
+     print("delete funtion called");
     await FirebaseDatabase.instance
         .reference()
         .child("Reviews")
-
         .child(blogId).child(docId).remove();
 
 
-  }
-
-
-
-  checkIsUserLogin()
-  async{
-    String temp=  await box.get("token") ?? "";
-    if(temp == null || temp == "")
-      isLoginIn=false;
-    else
-      isLoginIn=true;
-
-    update();
   }
 
 
@@ -304,5 +283,46 @@ class BlogDetailsController extends GetxController {
     Share.share("title"+ ":" +" "+headline +" \n" +"App link :" + "abcd link");
 
   }
+
+  checkIsUserLogin()
+  async{
+    String temp= (await box.get("token")  ?? "").toString();
+    if(temp == null || temp == "")
+      isLoginIn=false;
+    else
+      isLoginIn=true;
+
+    update();
+  }
+
+
+
+  loginToGoogle() {
+    googleInstance.googleLogin();
+    initFun();
+    update();
+    Get.back();
+
+
+  }
+
+
+
+
+  loginToTwitter() {
+    twitterInstance.loginTwitter();
+    initFun();
+    update();
+    Get.back();
+
+
+  }
+
+
+
+  logOutToGoogle() => googleInstance.googleSignOut();
+
+
+  logOutToTwitter() => twitterInstance.logoutTwitter();
 
 }

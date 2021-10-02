@@ -36,6 +36,7 @@ class GoogleService extends GetxController
         "photoUrl":value!.photoUrl,
       };
       await  Hive.box(Keywords.app_Name)..put("token",value!.id);
+      await  Hive.box(Keywords.app_Name)..put("login_method","google");
       await FirebaseDatabase.instance.reference().child(Keywords.UserInfoDb).child(value!.id).set(model);
 
 
@@ -74,7 +75,10 @@ class GoogleService extends GetxController
               "like":0,
               "dislike":0
             },
-
+            "c11_blog":{
+              "like":0,
+              "dislike":0
+            },
           }
 
 

@@ -88,8 +88,9 @@ class EditProfileScreen extends GetView<EditProfileController> {
                           height: 250,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(5)
+                          //  color: Colors.green,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.black.withOpacity(.3),width: .4)
                           ),
                           child: controller.photoUrl == "" ? Image(image: NetworkImage(controller.userData["photoUrl"]),):
                             Image.file(controller.pickedImageData)

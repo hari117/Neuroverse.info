@@ -20,7 +20,7 @@ class EditProfileController extends GetxController {
     DataSnapshot blodData = await FirebaseDatabase.instance
         .reference()
         .child("UserInformation")
-        .child(box.get("token") ?? "")
+        .child((box.get("token")).toString() ?? "")
         .once();
 
     userData = blodData!.value;

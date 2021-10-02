@@ -5,6 +5,9 @@ class SplashScreenController extends GetxController
 
  @override
   void onInit() {
+
+  Get.find<TwitterAuthService>()..initTwitter();
+
 //
   }
 
