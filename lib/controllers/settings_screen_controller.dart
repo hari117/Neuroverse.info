@@ -1,5 +1,6 @@
 import 'package:neuroverse/helpers/imports_and_exports.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
 
 class SettingsScreenController extends GetxController
 {
@@ -102,6 +103,22 @@ class SettingsScreenController extends GetxController
 
 
 
+      aboutUswebsite()async{
+String url="https://www.neuroverse.info/about-the-founder";
+        await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+      }
+
+       openGmail()async{
+
+         final MailOptions mailOptions = MailOptions(
+           body: '',
+           subject: 'Neuroverse Subject',
+           recipients: ['tiyaarvati2022@gmail.com'],
+           isHTML: true,
+
+         );
+         await FlutterMailer.send(mailOptions);
+       }
 
   login()
   async{

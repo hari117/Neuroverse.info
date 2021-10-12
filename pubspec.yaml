@@ -52,6 +52,7 @@ dev_dependencies:
   share :
   twitter_login :
   package_info :
+  flutter_mailer :
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

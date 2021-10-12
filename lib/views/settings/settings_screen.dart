@@ -227,34 +227,39 @@ class SettingsScreen extends GetView<SettingsScreenController> {
                                   ),
                                 )
                               : Container(),
-                          Container(
-                            width: double.infinity,
-                            padding:
-                                EdgeInsets.only(top: 15, bottom: 15, left: 5),
-                            margin: EdgeInsets.only(top: 15),
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                                color: AppColors.neuroverse_Backgroud_Color,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Container(
-                                  width: 25,
-                                  height: 20,
-                                  child: Image(
-                                    image: AssetImage(
-                                      ImagesAndIcons.about_us,
+                          InkWell(
+                            onTap: (){
+                              controller.aboutUswebsite();
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding:
+                                  EdgeInsets.only(top: 15, bottom: 15, left: 5),
+                              margin: EdgeInsets.only(top: 15),
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                  color: AppColors.neuroverse_Backgroud_Color,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Container(
+                                    width: 25,
+                                    height: 20,
+                                    child: Image(
+                                      image: AssetImage(
+                                        ImagesAndIcons.about_us,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                settingsText("About us")
-                              ],
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  settingsText("About us")
+                                ],
+                              ),
                             ),
                           ),
                           InkWell(
@@ -323,6 +328,52 @@ class SettingsScreen extends GetView<SettingsScreenController> {
                                     width: 8,
                                   ),
                                   settingsText("Privacy policy")
+                                ],
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              controller.openGmail();
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding:
+                              EdgeInsets.only(top: 15, bottom: 15, left: 5),
+                              margin: EdgeInsets.only(top: 15),
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                  color: AppColors.neuroverse_Backgroud_Color,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Container(
+                                          width: 25,
+                                          height: 20,
+                                          child: Icon(Icons.mail)
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        settingsText("Contact us")
+                                      ],
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 15),
+                                      child:
+                                      settingsText("tiyaarvati2022@gmail.com"),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -535,7 +586,7 @@ class SettingsScreen extends GetView<SettingsScreenController> {
               fontSize: 14,
               color: Colors.black,
               fontWeight: FontWeight.w400,
-              letterSpacing: .5)),
+              letterSpacing: .5)),overflow: TextOverflow.ellipsis,
     );
   }
 

@@ -325,4 +325,11 @@ class BlogDetailsController extends GetxController {
 
   logOutToTwitter() => twitterInstance.logoutTwitter();
 
+
+
+  openDonateLink()async{
+    String url="https://www.gofundme.com/f/homepage2?utm_campaign=p_cf+share-flow-1&utm_medium=copy_link&utm_source=customer";
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
 }

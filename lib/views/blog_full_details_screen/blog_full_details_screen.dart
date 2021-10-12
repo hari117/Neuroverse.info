@@ -260,26 +260,31 @@ class BlogFullDetailsScreen extends GetView<BlogDetailsController> {
                                 )
                               ],
                             ),
-                            Container(
-                              height: 35,
-                              width: 100,
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Text("Donate",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.clip,
-                                  style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.normal,
-                                          letterSpacing: 1.2))),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                    color: AppColors.secondry_color,
-                                    width: 1.5),
-                                color: AppColors.secondry_color,
+                            InkWell(
+                              onTap: (){
+                                controller.openDonateLink();
+                              },
+                              child: Container(
+                                height: 35,
+                                width: 100,
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: Text("Donate",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.clip,
+                                    style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.normal,
+                                            letterSpacing: 1.2))),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                      color: AppColors.secondry_color,
+                                      width: 1.5),
+                                  color: AppColors.secondry_color,
+                                ),
                               ),
                             )
                             // dontate monemy
